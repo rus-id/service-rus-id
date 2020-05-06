@@ -1,6 +1,6 @@
 package valuetypes
 
-type LicenseID struct {
+type DrivingLicenseID struct {
 	serial string
 	number string
 }

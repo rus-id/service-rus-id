@@ -12,6 +12,7 @@ type Passport struct {
 	birthday     time.Time
 	issue        valuetypes.PassportIssue
 	registration valuetypes.Address
+	validation   valuetypes.PassportValidation
 }
 
 func NewPassport() {

@@ -3,9 +3,15 @@ package aggregates
 import (
 	"time"
 
+	"github.com/bgoldovsky/service-rus-id/internal/domain/snapshots"
+
 	"github.com/bgoldovsky/service-rus-id/internal/domain/entities"
 	"github.com/bgoldovsky/service-rus-id/internal/domain/valuetypes"
 )
+
+type UserAggregate interface {
+	GetSnapshot() *snapshots.UserSnapshot
+}
 
 type User struct {
 	ID               valuetypes.UserID
@@ -30,4 +36,8 @@ func NewUser(
 		ID:    ID,
 		Snils: snils,
 	}
+}
+
+func NewUserFromSnapshot(snapshot snapshots.UserSnapshot) *User {
+
 }

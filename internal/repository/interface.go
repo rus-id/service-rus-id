@@ -8,5 +8,5 @@ import (
 type UserRepository interface {
 	FindOrCreate(id valuetypes.UserID) (*aggregates.User, error)
 	Save(user *aggregates.User) error
-	IsExist(id valuetypes.UserID) bool
+	IsExist(id valuetypes.UserID) (bool, error)
 }
