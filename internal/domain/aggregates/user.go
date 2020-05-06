@@ -17,8 +17,8 @@ type User struct {
 	Photo            valuetypes.Photo
 	Card             valuetypes.Card
 	RegistrationDate time.Time
-	Rating           valuetypes.Rating
-	Status           valuetypes.UserStatus
+	Rating           *valuetypes.Rating
+	Status           valuetypes.UserState
 	IsRemoved        bool
 	Version          int64
 }

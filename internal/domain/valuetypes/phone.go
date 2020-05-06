@@ -6,7 +6,9 @@ import (
 	"regexp"
 )
 
-const RusCode = 7
+const RusCountryCode CountryCode = 7
+
+type CountryCode int
 
 var (
 	ErrInvalidCountryCode = errors.New("invalid country code")
@@ -16,26 +18,42 @@ var (
 var phoneRegexp = regexp.MustCompile("^[0-9]{10}$")
 
 type Phone struct {
-	Code   int
-	Number string
+	code   CountryCode
+	number string
 }
 
-func NewPhone(code int, number string) (*Phone, error) {
+func NewPhone(code CountryCode, number string) (*Phone, error) {
 	if ok, err := validateNumber(code, number); !ok {
 		return nil, err
 	}
+
 	return &Phone{
-		Code:   code,
-		Number: number,
+		code:   code,
+		number: number,
 	}, nil
 }
 
-func (p *Phone) String() string {
-	return fmt.Sprintf("+%v%v", p.Code, p.Number)
+func (p *Phone) GetCode() CountryCode {
+	return p.code
 }
 
-func validateNumber(code int, number string) (bool, error) {
-	if code != RusCode {
+func (p *Phone) GetNumber() string {
+	return p.number
+}
+
+func (p *Phone) String() string {
+	runes := []rune(p.number)
+
+	return fmt.Sprintf("+%v(%v)%v-%v-%v",
+		p.code,
+		string(runes[:3]),
+		string(runes[3:6]),
+		string(runes[6:8]),
+		string(runes[8:10]))
+}
+
+func validateNumber(code CountryCode, number string) (bool, error) {
+	if code != RusCountryCode {
 		return false, ErrInvalidCountryCode
 	}
 

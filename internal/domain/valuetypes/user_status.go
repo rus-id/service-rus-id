@@ -1,17 +1,17 @@
 package valuetypes
 
 const (
-	ActiveUser UserStatus = iota + 1
-	BlockedUser
+	UserStateActive UserState = iota + 1
+	UserStateBlocked
 )
 
-type UserStatus int
+type UserState int
 
-func (us UserStatus) String() string {
-	switch us {
-	case ActiveUser:
+func (u UserState) String() string {
+	switch u {
+	case UserStateActive:
 		return "active user"
-	case BlockedUser:
+	case UserStateBlocked:
 		return "blocked user"
 	}
 

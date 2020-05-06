@@ -2,6 +2,7 @@ package valuetypes
 
 import (
 	"errors"
+	"fmt"
 	"regexp"
 	"strconv"
 )
@@ -17,9 +18,17 @@ func NewSnils(value string) (Snils, error) {
 		return "", err
 	}
 
-	snils := Snils(value)
+	return Snils(value), nil
+}
 
-	return snils, nil
+func (s Snils) String() string {
+	runes := []rune(s)
+
+	return fmt.Sprintf("%v-%v-%v-%v",
+		string(runes[0:3]),
+		string(runes[3:6]),
+		string(runes[6:9]),
+		string(runes[9:11]))
 }
 
 func validateSnils(value string) (bool, error) {
