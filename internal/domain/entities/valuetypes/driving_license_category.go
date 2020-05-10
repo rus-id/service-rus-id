@@ -1,23 +1,23 @@
 package valuetypes
 
 const (
-	A DrivingLicenseCategory = iota + 1
-	B
-	C
-	D
+	DrivingLicenseA DrivingLicenseCategory = iota + 1
+	DrivingLicenseB
+	DrivingLicenseC
+	DrivingLicenseD
 )
 
 type DrivingLicenseCategory int
 
 func (d DrivingLicenseCategory) String() string {
 	switch d {
-	case A:
+	case DrivingLicenseA:
 		return "A"
-	case B:
+	case DrivingLicenseB:
 		return "B"
-	case C:
+	case DrivingLicenseC:
 		return "C"
-	case D:
+	case DrivingLicenseD:
 		return "D"
 	}
 

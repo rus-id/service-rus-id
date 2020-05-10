@@ -39,5 +39,5 @@ func NewUser(
 }
 
 func NewUserFromSnapshot(snapshot snapshots.UserSnapshot) *User {
-
+	return nil
 }
