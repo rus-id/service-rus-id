@@ -1,6 +1,10 @@
-package valuetypes
+package valuetypes_test
 
-import "testing"
+import (
+	"testing"
+
+	. "github.com/bgoldovsky/service-rus-id/internal/domain/valuetypes"
+)
 
 func TestNewRating(t *testing.T) {
 	data := []struct {
@@ -26,12 +30,12 @@ func TestNewRating(t *testing.T) {
 			continue
 		}
 
-		if rating.positive != val.positive {
-			t.Errorf("expected: %v, actual: %v", val.positive, rating.positive)
+		if act := rating.GetPositive(); act != val.positive {
+			t.Errorf("expected: %v, actual: %v", val.positive, act)
 		}
 
-		if rating.negative != val.negative {
-			t.Errorf("expected: %v, actual: %v", val.negative, rating.negative)
+		if act := rating.GetNegative(); act != val.negative {
+			t.Errorf("expected: %v, actual: %v", val.negative, act)
 		}
 	}
 }
@@ -59,12 +63,12 @@ func TestRating_Setters(t *testing.T) {
 			rating.AddNegative()
 		}
 
-		if rating.positive != val.positive {
-			t.Errorf("expected: %v, act: %v", val.positive, rating.positive)
+		if act := rating.GetPositive(); act != val.positive {
+			t.Errorf("expected: %v, act: %v", val.positive, act)
 		}
 
-		if rating.negative != val.negative {
-			t.Errorf("expected: %v, act: %v", val.negative, rating.negative)
+		if act := rating.GetNegative(); act != val.negative {
+			t.Errorf("expected: %v, act: %v", val.negative, act)
 		}
 
 		if total := rating.GetTotal(); total != val.total {
@@ -87,12 +91,12 @@ func TestRating_Getters(t *testing.T) {
 	for _, val := range data {
 		rating, _ := NewRating(val.positive, val.negative)
 
-		if rating.GetPositive() != val.positive {
-			t.Errorf("expected: %v, actual: %v", val.positive, rating.positive)
+		if act := rating.GetPositive(); act != val.positive {
+			t.Errorf("expected: %v, actual: %v", val.positive, act)
 		}
 
-		if rating.GetNegative() != val.negative {
-			t.Errorf("expected: %v, actual: %v", val.negative, rating.negative)
+		if act := rating.GetNegative(); act != val.negative {
+			t.Errorf("expected: %v, actual: %v", val.negative, act)
 		}
 
 		total := val.positive - val.negative

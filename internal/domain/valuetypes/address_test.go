@@ -1,6 +1,10 @@
-package valuetypes
+package valuetypes_test
 
-import "testing"
+import (
+	"testing"
+
+	. "github.com/bgoldovsky/service-rus-id/internal/domain/valuetypes"
+)
 
 func TestNewAddress(t *testing.T) {
 	data := []struct {

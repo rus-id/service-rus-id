@@ -22,3 +22,21 @@ func TestUserStatus_String(t *testing.T) {
 		}
 	}
 }
+
+func TestUserStatus_IsValid(t *testing.T) {
+	data := []struct {
+		state   UserState
+		isValid bool
+	}{
+		{UserStateActive, true},
+		{UserStateBlocked, true},
+		{100, false},
+		{-100, false},
+	}
+
+	for _, val := range data {
+		if act := val.state.IsValid(); act != val.isValid {
+			t.Errorf("expected: %v, act: %v", val.isValid, act)
+		}
+	}
+}

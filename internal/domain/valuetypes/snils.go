@@ -14,7 +14,7 @@ var snilsRegexp = regexp.MustCompile("^[0-9]{11}$")
 type Snils string
 
 func NewSnils(value string) (Snils, error) {
-	if ok, err := validateSnils(value); !ok {
+	if ok, err := ValidateSnils(value); !ok {
 		return "", err
 	}
 
@@ -31,7 +31,7 @@ func (s Snils) String() string {
 		string(runes[9:11]))
 }
 
-func validateSnils(value string) (bool, error) {
+func ValidateSnils(value string) (bool, error) {
 	if !snilsRegexp.MatchString(value) {
 		return false, ErrInvalidSnils
 	}

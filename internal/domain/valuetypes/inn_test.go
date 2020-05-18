@@ -1,6 +1,10 @@
-package valuetypes
+package valuetypes_test
 
-import "testing"
+import (
+	"testing"
+
+	. "github.com/bgoldovsky/service-rus-id/internal/domain/valuetypes"
+)
 
 var testDataInn = []struct {
 	inn      string
@@ -33,7 +37,7 @@ func TestNewInn(t *testing.T) {
 
 func TestValidateInn(t *testing.T) {
 	for _, val := range testDataInn {
-		ok, err := validateInn(val.inn)
+		ok, err := ValidateInn(val.inn)
 		if ok != val.expected {
 			t.Errorf("inn %v not valid. error: %v", val.inn, err)
 		}

@@ -1,6 +1,10 @@
-package valuetypes
+package valuetypes_test
 
-import "testing"
+import (
+	"testing"
+
+	. "github.com/bgoldovsky/service-rus-id/internal/domain/entities/driving_license/valuetypes"
+)
 
 func TestDrivingLicenseValidation_Getters(t *testing.T) {
 	data := []struct {

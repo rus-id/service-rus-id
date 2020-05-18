@@ -17,3 +17,11 @@ func (u UserState) String() string {
 
 	return ""
 }
+
+func (u UserState) IsValid() bool {
+	if u != UserStateActive && u != UserStateBlocked {
+		return false
+	}
+
+	return true
+}

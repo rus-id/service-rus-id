@@ -1,6 +1,8 @@
 package valuetypes
 
-import "fmt"
+import (
+	"fmt"
+)
 
 type Accessor int
 
@@ -96,4 +98,15 @@ func (t *Tolerance) String() string {
 	}
 
 	return text
+}
+
+func (t *Tolerance) GetAccessors() []Accessor {
+	if len(t.accessors) == 0 {
+		return nil
+	}
+
+	accessors := make([]Accessor, len(t.accessors))
+	copy(accessors, t.accessors)
+
+	return accessors
 }

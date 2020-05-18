@@ -1,6 +1,10 @@
-package valuetypes
+package valuetypes_test
 
-import "testing"
+import (
+	"testing"
+
+	. "github.com/bgoldovsky/service-rus-id/internal/domain/entities/passport/valuetypes"
+)
 
 func TestPassportValidation_Getters(t *testing.T) {
 	data := []struct {

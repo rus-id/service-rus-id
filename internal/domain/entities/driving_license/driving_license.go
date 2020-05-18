@@ -9,14 +9,15 @@ import (
 )
 
 var (
-	ErrInvalidID        = errors.New("driving license ID not specified")
-	ErrInvalidCategory  = errors.New("driving license invalid category")
-	ErrInvalidName      = errors.New("driving license name not specified")
-	ErrInvalidBirthday  = errors.New("driving license invalid birthday")
-	ErrInvalidIssue     = errors.New("driving license invalid issued")
-	ErrInvalidExpired   = errors.New("driving license invalid expired")
-	ErrInvalidDates     = errors.New("driving license expired date must be greater then issued date")
-	ErrInvalidResidence = errors.New("driving license residence not specified")
+	ErrInvalidID         = errors.New("driving license ID not specified")
+	ErrInvalidCategory   = errors.New("driving license invalid category")
+	ErrInvalidName       = errors.New("driving license name not specified")
+	ErrInvalidBirthday   = errors.New("driving license invalid birthday")
+	ErrInvalidIssue      = errors.New("driving license invalid issued")
+	ErrInvalidExpired    = errors.New("driving license invalid expired")
+	ErrInvalidDates      = errors.New("driving license expired date must be greater then issued date")
+	ErrInvalidResidence  = errors.New("driving license residence not specified")
+	ErrInvalidValidation = errors.New("driving license validation not specified")
 )
 
 type DrivingLicense struct {
@@ -28,6 +29,7 @@ type DrivingLicense struct {
 	expired      *time.Time
 	residence    *valuetypes.DrivingLicenseResidence
 	specialMarks string
+	validation   *valuetypes.DrivingLicenseValidation
 }
 
 func NewDrivingLicense(
@@ -38,7 +40,8 @@ func NewDrivingLicense(
 	issue *time.Time,
 	expired *time.Time,
 	residence *valuetypes.DrivingLicenseResidence,
-	specialMarks string) (*DrivingLicense, error) {
+	specialMarks string,
+	validation *valuetypes.DrivingLicenseValidation) (*DrivingLicense, error) {
 	if id == nil {
 		return nil, ErrInvalidID
 	}
@@ -69,6 +72,10 @@ func NewDrivingLicense(
 
 	if residence == nil {
 		return nil, ErrInvalidResidence
+	}
+
+	if validation == nil {
+		return nil, ErrInvalidValidation
 	}
 
 	return &DrivingLicense{
@@ -137,6 +144,14 @@ func (d *DrivingLicense) ChangeSpecialMark(specialMark string) {
 	d.specialMarks = specialMark
 }
 
+func (d *DrivingLicense) ChangeValidation(validation *valuetypes.DrivingLicenseValidation) {
+	if validation == nil {
+		return
+	}
+
+	d.validation = validation
+}
+
 //Getters
 
 func (d *DrivingLicense) GetID() *valuetypes.DrivingLicenseID {
@@ -169,4 +184,8 @@ func (d *DrivingLicense) GetResidence() *valuetypes.DrivingLicenseResidence {
 
 func (d *DrivingLicense) GetSpecialMarks() string {
 	return d.specialMarks
+}
+
+func (d *DrivingLicense) GetValidation() *valuetypes.DrivingLicenseValidation {
+	return d.validation
 }

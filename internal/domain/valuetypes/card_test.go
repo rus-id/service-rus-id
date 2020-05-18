@@ -1,8 +1,10 @@
-package valuetypes
+package valuetypes_test
 
 import (
 	"testing"
 	"time"
+
+	. "github.com/bgoldovsky/service-rus-id/internal/domain/valuetypes"
 )
 
 var paymentSystemData = []struct {
@@ -19,7 +21,7 @@ var paymentSystemData = []struct {
 
 func TestGetPaymentSystem_Success(t *testing.T) {
 	for _, val := range paymentSystemData {
-		system, _ := getPaymentSystem(val.number)
+		system, _ := GetPaymentSystem(val.number)
 		if val.system != system {
 			t.Errorf("expected: %v, actual: %v", val.system, system)
 		}
@@ -27,7 +29,7 @@ func TestGetPaymentSystem_Success(t *testing.T) {
 }
 
 func TestGetPaymentSystem_Fail(t *testing.T) {
-	_, err := getPaymentSystem("1234567890")
+	_, err := GetPaymentSystem("1234567890")
 	if err != ErrInvalidCardNumber {
 		t.Errorf("expected error: %v, actual: %v", ErrInvalidCardNumber, err)
 	}
@@ -35,7 +37,7 @@ func TestGetPaymentSystem_Fail(t *testing.T) {
 
 func TestPaymentSystem_String(t *testing.T) {
 	for _, val := range paymentSystemData {
-		system, _ := getPaymentSystem(val.number)
+		system, _ := GetPaymentSystem(val.number)
 		if text := system.String(); text != val.text {
 			t.Errorf("expected: %v, actual: %v", val.text, text)
 		}
@@ -68,12 +70,12 @@ func TestNewCard(t *testing.T) {
 			continue
 		}
 
-		if card.number != val.number {
-			t.Errorf("expected: %v, actual: %v", val.number, card.number)
+		if act := card.GetNumber(); act != val.number {
+			t.Errorf("expected: %v, actual: %v", val.number, act)
 		}
 
-		if card.expired != expired {
-			t.Errorf("expected: %v, actual: %v", expired, card.expired)
+		if act := card.GetExpired(); act != expired {
+			t.Errorf("expected: %v, actual: %v", expired, act)
 		}
 	}
 }

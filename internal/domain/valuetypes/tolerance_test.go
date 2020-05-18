@@ -1,6 +1,10 @@
-package valuetypes
+package valuetypes_test
 
-import "testing"
+import (
+	"testing"
+
+	. "github.com/bgoldovsky/service-rus-id/internal/domain/valuetypes"
+)
 
 func TestAccessor_String(t *testing.T) {
 	data := []struct {
@@ -31,13 +35,13 @@ func TestTolerance_AddFullAccess(t *testing.T) {
 		AccessorDriverLicense}
 
 	tolerance := NewTolerance(userID, nil)
-	if len(tolerance.accessors) != 0 {
-		t.Errorf("accessories must be empty")
+	if act := len(tolerance.GetAccessors()); act != 0 {
+		t.Errorf("accessories must be empty, act %v", act)
 	}
 
 	tolerance = tolerance.AddFullAccess()
-	if len(tolerance.accessors) != 5 {
-		t.Errorf("accessories must be 5")
+	if act := len(tolerance.GetAccessors()); act != 5 {
+		t.Errorf("accessories must be 5, act %v", act)
 	}
 
 	for _, val := range accessors {
@@ -61,15 +65,15 @@ func TestTolerance_AddAccess(t *testing.T) {
 	}
 
 	tolerance := NewTolerance(userID, nil)
-	if len(tolerance.accessors) != 0 {
-		t.Errorf("accessories must be empty")
+	if act := len(tolerance.GetAccessors()); act != 0 {
+		t.Errorf("accessories must be empty, act %v", act)
 	}
 
 	tolerance = tolerance.AddAccess(AccessorPhone)
 	tolerance = tolerance.AddAccess(AccessorPassport)
 
-	if len(tolerance.accessors) != 2 {
-		t.Errorf("accessories must be 2")
+	if act := len(tolerance.GetAccessors()); act != 2 {
+		t.Errorf("accessories must be 2, act %v", act)
 	}
 
 	for _, val := range data {
@@ -94,15 +98,15 @@ func TestTolerance_RemoveAccess(t *testing.T) {
 
 	tolerance := NewTolerance(userID, nil)
 	tolerance = tolerance.AddFullAccess()
-	if len(tolerance.accessors) != 5 {
-		t.Errorf("accessories must me 5")
+	if act := len(tolerance.GetAccessors()); act != 5 {
+		t.Errorf("accessories must me 5, act %v", act)
 	}
 
 	tolerance = tolerance.RemoveAccess(AccessorContacts)
 	tolerance = tolerance.RemoveAccess(AccessorProfile)
 
-	if len(tolerance.accessors) != 3 {
-		t.Errorf("accessories must be 3")
+	if act := len(tolerance.GetAccessors()); act != 3 {
+		t.Errorf("accessories must be 3, act %v", act)
 	}
 
 	for _, val := range data {
@@ -127,21 +131,21 @@ func TestTolerance_Idempotent(t *testing.T) {
 
 	tolerance := NewTolerance(userID, nil)
 	tolerance = tolerance.AddFullAccess()
-	if len(tolerance.accessors) != 5 {
-		t.Errorf("accessories must me 5")
+	if act := len(tolerance.GetAccessors()); act != 5 {
+		t.Errorf("accessories must me 5, act %v", act)
 	}
 
 	tolerance = tolerance.AddAccess(AccessorContacts)
 	tolerance = tolerance.AddAccess(AccessorContacts)
-	if len(tolerance.accessors) != 5 {
-		t.Errorf("accessories must me 5")
+	if act := len(tolerance.GetAccessors()); act != 5 {
+		t.Errorf("accessories must me 5, act %v", act)
 	}
 
 	tolerance = tolerance.RemoveAccess(AccessorContacts)
 	tolerance = tolerance.RemoveAccess(AccessorContacts)
 
-	if len(tolerance.accessors) != 4 {
-		t.Errorf("accessories must be 4")
+	if act := len(tolerance.GetAccessors()); act != 4 {
+		t.Errorf("accessories must be 4, act %v", act)
 	}
 
 	for _, val := range data {

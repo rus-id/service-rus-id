@@ -1,8 +1,10 @@
-package valuetypes
+package valuetypes_test
 
 import (
 	"testing"
 	"time"
+
+	. "github.com/bgoldovsky/service-rus-id/internal/domain/entities/passport/valuetypes"
 )
 
 func TestNewPassportIssue(t *testing.T) {
@@ -20,26 +22,26 @@ func TestNewPassportIssue(t *testing.T) {
 	}
 
 	for _, val := range data {
-		act, err := NewPassportIssue(val.organisation, val.date, val.code)
+		issue, err := NewPassportIssue(val.organisation, val.date, val.code)
 
 		if err != val.err {
-			t.Errorf("expected err: %v, act: %v", val.err, err)
+			t.Errorf("expected err: %v, issue: %v", val.err, err)
 		}
 
 		if err != nil {
 			continue
 		}
 
-		if act.organisation != val.organisation {
-			t.Errorf("expected: %v, actual: %v", val.organisation, act.organisation)
+		if act := issue.GetOrganisation(); act != val.organisation {
+			t.Errorf("expected: %v, actual: %v", val.organisation, act)
 		}
 
-		if act.date != val.date {
-			t.Errorf("expected: %v, actual: %v", val.date, act.date)
+		if act := issue.GetDate(); act != val.date {
+			t.Errorf("expected: %v, actual: %v", val.date, act)
 		}
 
-		if act.code != val.code {
-			t.Errorf("expected: %v, actual: %v", val.code, act.code)
+		if act := issue.GetCode(); act != val.code {
+			t.Errorf("expected: %v, actual: %v", val.code, act)
 		}
 	}
 }

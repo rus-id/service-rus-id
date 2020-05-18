@@ -1,6 +1,10 @@
-package valuetypes
+package valuetypes_test
 
-import "testing"
+import (
+	"testing"
+
+	. "github.com/bgoldovsky/service-rus-id/internal/domain/entities/passport/valuetypes"
+)
 
 func TestNewPassportID(t *testing.T) {
 	var data = []struct {
@@ -28,12 +32,12 @@ func TestNewPassportID(t *testing.T) {
 			continue
 		}
 
-		if id.serial != val.serial {
-			t.Errorf("expected: %v, act: %v", val.serial, id.serial)
+		if act := id.GetSerial(); act != val.serial {
+			t.Errorf("expected: %v, act: %v", val.serial, act)
 		}
 
-		if id.number != val.number {
-			t.Errorf("expected: %v, act: %v", val.number, id.number)
+		if act := id.GetNumber(); act != val.number {
+			t.Errorf("expected: %v, act: %v", val.number, act)
 		}
 	}
 }

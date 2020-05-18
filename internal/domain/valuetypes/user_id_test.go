@@ -1,8 +1,10 @@
-package valuetypes
+package valuetypes_test
 
 import (
 	"fmt"
 	"testing"
+
+	. "github.com/bgoldovsky/service-rus-id/internal/domain/valuetypes"
 )
 
 func TestNewUserID_Success(t *testing.T) {

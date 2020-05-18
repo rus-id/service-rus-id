@@ -1,7 +1,9 @@
-package valuetypes
+package valuetypes_test
 
 import (
 	"testing"
+
+	. "github.com/bgoldovsky/service-rus-id/internal/domain/valuetypes"
 )
 
 func TestNewPhone(t *testing.T) {
@@ -28,12 +30,12 @@ func TestNewPhone(t *testing.T) {
 			continue
 		}
 
-		if phone.code != val.code {
-			t.Errorf("expected: %v, actual: %v", val.code, phone.code)
+		if act := phone.GetCode(); act != val.code {
+			t.Errorf("expected: %v, actual: %v", val.code, act)
 		}
 
-		if phone.number != val.number {
-			t.Errorf("expected: %v, actual: %v", val.number, phone.number)
+		if act := phone.GetNumber(); act != val.number {
+			t.Errorf("expected: %v, actual: %v", val.number, act)
 		}
 	}
 }

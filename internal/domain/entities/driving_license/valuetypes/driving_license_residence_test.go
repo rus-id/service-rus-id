@@ -1,17 +1,21 @@
-package valuetypes
+package valuetypes_test
 
 import (
 	"reflect"
 	"testing"
+
+	. "github.com/bgoldovsky/service-rus-id/internal/domain/entities/driving_license/valuetypes"
 )
 
 func TestNewResidence(t *testing.T) {
+	residence, _ := NewResidence("123")
+
 	data := []struct {
 		value    string
 		expected *DrivingLicenseResidence
 		err      error
 	}{
-		{"123", &DrivingLicenseResidence{"123"}, nil},
+		{"123", residence, nil},
 		{"", nil, ErrInvalidResidence},
 	}
 

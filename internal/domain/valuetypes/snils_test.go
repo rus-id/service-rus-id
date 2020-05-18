@@ -1,6 +1,10 @@
-package valuetypes
+package valuetypes_test
 
-import "testing"
+import (
+	"testing"
+
+	. "github.com/bgoldovsky/service-rus-id/internal/domain/valuetypes"
+)
 
 var testDataSnils = []struct {
 	snils    string
@@ -28,7 +32,7 @@ func TestNewSnils(t *testing.T) {
 
 func TestValidateSnils(t *testing.T) {
 	for _, val := range testDataSnils {
-		ok, err := validateSnils(val.snils)
+		ok, err := ValidateSnils(val.snils)
 		if ok != val.expected {
 			t.Errorf("snils %v not valid. error: %v", val.snils, err)
 		}

@@ -1,6 +1,10 @@
-package valuetypes
+package valuetypes_test
 
-import "testing"
+import (
+	"testing"
+
+	. "github.com/bgoldovsky/service-rus-id/internal/domain/valuetypes"
+)
 
 func TestNewName_Success(t *testing.T) {
 	middle := "B"
@@ -8,31 +12,31 @@ func TestNewName_Success(t *testing.T) {
 
 	data := []struct {
 		first  string
-		middle *string
+		middle string
 		last   string
 	}{
-		{"Boris", &middle, "Goldovsky"},
-		{"Boris", &emptyMiddle, "Goldovsky"},
-		{"Boris", nil, "Goldovsky"},
+		{"Boris", middle, "Goldovsky"},
+		{"Boris", emptyMiddle, "Goldovsky"},
+		{"Boris", "", "Goldovsky"},
 	}
 
 	for _, val := range data {
-		name, err := NewName(val.first, val.middle, val.last)
+		name, err := NewName(val.first, &val.middle, val.last)
 
 		if err != nil {
 			t.Errorf("error occured: %v", err)
 		}
 
-		if name.first != val.first {
-			t.Errorf("expected: %v, act: %v", val.first, name.first)
+		if act := name.GetFirst(); act != val.first {
+			t.Errorf("expected: %v, act: %v", val.first, act)
 		}
 
-		if name.middle != val.middle {
-			t.Errorf("expected: %v, act: %v", val.middle, name.middle)
+		if act := name.GetMiddle(); act != val.middle {
+			t.Errorf("expected: %v, act: %v", val.middle, act)
 		}
 
-		if name.last != val.last {
-			t.Errorf("expected: %v, act: %v", val.last, name.last)
+		if act := name.GetLast(); act != val.last {
+			t.Errorf("expected: %v, act: %v", val.last, act)
 		}
 	}
 }
@@ -75,16 +79,16 @@ func TestName_Getters(t *testing.T) {
 	for _, val := range data {
 		name, _ := NewName(val.first, val.middle, val.last)
 
-		if name.GetFirst() != val.first {
-			t.Errorf("expected: %v, act: %v", val.last, name.last)
+		if act := name.GetFirst(); act != val.first {
+			t.Errorf("expected: %v, act: %v", val.last, act)
 		}
 
-		if name.GetMiddle() != val.expectedMiddle {
-			t.Errorf("expected: %v, act: %v", val.middle, name.middle)
+		if act := name.GetMiddle(); act != val.expectedMiddle {
+			t.Errorf("expected: %v, act: %v", val.middle, act)
 		}
 
-		if name.GetLast() != val.last {
-			t.Errorf("expected: %v, act: %v", val.last, name.last)
+		if act := name.GetLast(); act != val.last {
+			t.Errorf("expected: %v, act: %v", val.last, act)
 		}
 	}
 }

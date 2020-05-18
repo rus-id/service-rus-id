@@ -25,7 +25,7 @@ var (
 	paymentMirRegexp        = regexp.MustCompile("^220\\d{13}$")
 )
 
-func getPaymentSystem(number string) (PaymentSystem, error) {
+func GetPaymentSystem(number string) (PaymentSystem, error) {
 	switch {
 	case paymentVisaRegexp.MatchString(number):
 		return PaymentVisa, nil
@@ -62,7 +62,7 @@ type Card struct {
 }
 
 func NewCard(number string, expired time.Time) (*Card, error) {
-	paymentSystem, err := getPaymentSystem(number)
+	paymentSystem, err := GetPaymentSystem(number)
 	if err != nil {
 		return nil, err
 	}

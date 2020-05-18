@@ -1,8 +1,10 @@
-package valuetypes
+package valuetypes_test
 
 import (
 	"reflect"
 	"testing"
+
+	. "github.com/bgoldovsky/service-rus-id/internal/domain/valuetypes"
 )
 
 func TestNewPhoto_Success(t *testing.T) {
