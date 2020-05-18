@@ -38,6 +38,28 @@ func TestNewDrivingLicenseID(t *testing.T) {
 	}
 }
 
+func TestDrivingLicenseID_Getters(t *testing.T) {
+	var data = []struct {
+		serial string
+		number string
+	}{
+		{"0000", "000000"},
+		{"1234", "123456"},
+	}
+
+	for _, val := range data {
+		id, _ := NewDrivingLicenseID(val.serial, val.number)
+
+		if act := id.GetSerial(); act != val.serial {
+			t.Errorf("expected: %v, act: %v", val.serial, act)
+		}
+
+		if act := id.GetNumber(); act != val.number {
+			t.Errorf("expected: %v, act: %v", val.number, act)
+		}
+	}
+}
+
 func TestDrivingLicenseID_String(t *testing.T) {
 	var data = []struct {
 		serial   string

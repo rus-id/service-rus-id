@@ -31,6 +31,14 @@ func NewPassportID(serial, number string) (*PassportID, error) {
 	return &PassportID{serial: serial, number: number}, nil
 }
 
+func (id *PassportID) GetSerial() string {
+	return id.serial
+}
+
+func (id *PassportID) GetNumber() string {
+	return id.number
+}
+
 func (id *PassportID) String() string {
 	serialRunes := []rune(id.serial)
 

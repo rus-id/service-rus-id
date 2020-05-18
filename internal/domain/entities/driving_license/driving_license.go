@@ -3,17 +3,38 @@ package driving_license
 import (
 	"time"
 
-	valuetypes2 "github.com/bgoldovsky/service-rus-id/internal/domain/entities/driving_license/valuetypes"
-	valuetypes3 "github.com/bgoldovsky/service-rus-id/internal/domain/valuetypes"
+	"github.com/bgoldovsky/service-rus-id/internal/domain/entities/driving_license/valuetypes"
+	commonTypes "github.com/bgoldovsky/service-rus-id/internal/domain/valuetypes"
 )
 
 type DrivingLicense struct {
-	id           valuetypes2.DrivingLicenseID
-	category     valuetypes2.DrivingLicenseCategory
-	name         valuetypes3.Name
+	id           valuetypes.DrivingLicenseID
+	category     valuetypes.DrivingLicenseCategory
+	name         commonTypes.Name
 	birthday     time.Time
 	issue        time.Time
 	expired      time.Time
-	residence    valuetypes2.DrivingLicenseResidence
+	residence    valuetypes.DrivingLicenseResidence
 	specialMarks string
+}
+
+func NewDrivingLicense(
+	id valuetypes.DrivingLicenseID,
+	category valuetypes.DrivingLicenseCategory,
+	name commonTypes.Name,
+	birthday time.Time,
+	issue time.Time,
+	expired time.Time,
+	residence valuetypes.DrivingLicenseResidence,
+	specialMarks string) *DrivingLicense {
+	return &DrivingLicense{
+		id:           id,
+		category:     category,
+		name:         name,
+		birthday:     birthday,
+		issue:        issue,
+		expired:      expired,
+		residence:    residence,
+		specialMarks: specialMarks,
+	}
 }

@@ -31,6 +31,14 @@ func NewDrivingLicenseID(serial, number string) (*DrivingLicenseID, error) {
 	return &DrivingLicenseID{serial: serial, number: number}, nil
 }
 
+func (id *DrivingLicenseID) GetSerial() string {
+	return id.serial
+}
+
+func (id *DrivingLicenseID) GetNumber() string {
+	return id.number
+}
+
 func (id *DrivingLicenseID) String() string {
 	serialRunes := []rune(id.serial)
 

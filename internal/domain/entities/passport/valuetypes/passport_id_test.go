@@ -38,6 +38,28 @@ func TestNewPassportID(t *testing.T) {
 	}
 }
 
+func TestPassportID_Getters(t *testing.T) {
+	var data = []struct {
+		serial string
+		number string
+	}{
+		{"0000", "000000"},
+		{"1234", "123456"},
+	}
+
+	for _, val := range data {
+		id, _ := NewPassportID(val.serial, val.number)
+
+		if act := id.GetSerial(); act != val.serial {
+			t.Errorf("expected: %v, act: %v", val.serial, act)
+		}
+
+		if act := id.GetNumber(); act != val.number {
+			t.Errorf("expected: %v, act: %v", val.number, act)
+		}
+	}
+}
+
 func TestPassportID_String(t *testing.T) {
 	var data = []struct {
 		serial   string
