@@ -27,7 +27,7 @@ func TestDrivingLicenseValidation_Getters(t *testing.T) {
 }
 
 func TestDrivingLicenseValidation_String(t *testing.T) {
-	const expected = "GIBDD is valid: true. Document is valid: false"
+	const expected = "GIBDD valid: true. Document valid: false"
 
 	act := NewDrivingLicenseValidation(true, false).String()
 

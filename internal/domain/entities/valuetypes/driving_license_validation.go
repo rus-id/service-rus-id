@@ -20,5 +20,5 @@ func (v *DrivingLicenseValidation) GetDocument() bool {
 }
 
 func (v *DrivingLicenseValidation) String() string {
-	return fmt.Sprintf("GIBDD is valid: %v. Document is valid: %v", v.gibdd, v.document)
+	return fmt.Sprintf("GIBDD valid: %v. Document valid: %v", v.gibdd, v.document)
 }
