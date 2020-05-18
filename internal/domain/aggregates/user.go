@@ -3,9 +3,11 @@ package aggregates
 import (
 	"time"
 
+	"github.com/bgoldovsky/service-rus-id/internal/domain/entities/driving_license"
+	"github.com/bgoldovsky/service-rus-id/internal/domain/entities/passport"
+
 	"github.com/bgoldovsky/service-rus-id/internal/domain/snapshots"
 
-	"github.com/bgoldovsky/service-rus-id/internal/domain/entities"
 	"github.com/bgoldovsky/service-rus-id/internal/domain/valuetypes"
 )
 
@@ -16,8 +18,8 @@ type UserAggregate interface {
 type User struct {
 	ID               valuetypes.UserID
 	Phone            *valuetypes.Phone
-	Passport         *entities.Passport
-	DrivingLicense   *entities.DrivingLicense
+	Passport         *passport.Passport
+	DrivingLicense   *driving_license.DrivingLicense
 	Snils            valuetypes.Snils
 	Inn              valuetypes.Inn
 	Photo            valuetypes.Photo
