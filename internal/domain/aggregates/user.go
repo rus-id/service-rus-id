@@ -13,6 +13,7 @@ import (
 
 type UserAggregate interface {
 	GetSnapshot() *snapshots.UserSnapshot
+	GetID() valuetypes.UserID
 }
 
 type User struct {
@@ -26,6 +27,7 @@ type User struct {
 	Card             valuetypes.Card
 	RegistrationDate time.Time
 	Rating           *valuetypes.Rating
+	Tolerances       map[valuetypes.UserID]*valuetypes.Tolerance
 	Status           valuetypes.UserState
 	IsRemoved        bool
 	Version          int64
