@@ -6,10 +6,12 @@ var ErrInvalidAddress = errors.New("invalid address")
 
 type Address string
 
-func NewAddress(address string) (Address, error) {
+func NewAddress(address string) (*Address, error) {
 	if address == "" {
-		return "", ErrInvalidAddress
+		return nil, ErrInvalidAddress
 	}
 
-	return Address(address), nil
+	value := Address(address)
+
+	return &value, nil
 }

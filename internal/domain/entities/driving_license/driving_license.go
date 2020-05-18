@@ -37,7 +37,7 @@ func NewDrivingLicense(
 	category valuetypes.DrivingLicenseCategory,
 	name *commonTypes.Name,
 	birthday *time.Time,
-	issue *time.Time,
+	issued *time.Time,
 	expired *time.Time,
 	residence *valuetypes.DrivingLicenseResidence,
 	specialMarks string,
@@ -62,11 +62,11 @@ func NewDrivingLicense(
 		return nil, ErrInvalidExpired
 	}
 
-	if issue == nil {
+	if issued == nil {
 		return nil, ErrInvalidIssue
 	}
 
-	if expired.Unix() <= issue.Unix() {
+	if expired.Unix() <= issued.Unix() {
 		return nil, ErrInvalidDates
 	}
 
@@ -83,10 +83,11 @@ func NewDrivingLicense(
 		category:     category,
 		name:         name,
 		birthday:     birthday,
-		issued:       issue,
+		issued:       issued,
 		expired:      expired,
 		residence:    residence,
 		specialMarks: specialMarks,
+		validation:   validation,
 	}, nil
 }
 

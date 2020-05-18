@@ -11,6 +11,6 @@ run:
 .PHONY:test
 test:
 	echo "testing.."
-	go test -v -cover ./...
+	go test -v -cover -tags=entities ./...
 
 .DEFAULT_GOAL := run
