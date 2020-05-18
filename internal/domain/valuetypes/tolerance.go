@@ -29,7 +29,6 @@ func (a Accessor) String() string {
 	}
 }
 
-// TODO: Может переделать на map[Accessor]struct{}
 type Tolerance struct {
 	id        UserID
 	accessors []Accessor
