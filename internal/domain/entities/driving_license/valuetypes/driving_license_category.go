@@ -23,3 +23,14 @@ func (d DrivingLicenseCategory) String() string {
 
 	return ""
 }
+
+func (d DrivingLicenseCategory) IsValid() bool {
+	if d != DrivingLicenseA &&
+		d != DrivingLicenseB &&
+		d != DrivingLicenseC &&
+		d != DrivingLicenseD {
+		return false
+	}
+
+	return true
+}

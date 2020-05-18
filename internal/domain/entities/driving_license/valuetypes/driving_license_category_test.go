@@ -19,3 +19,23 @@ func TestDrivingLicenseCategory_String(t *testing.T) {
 		}
 	}
 }
+
+func TestDrivingLicenseCategory_IsValid(t *testing.T) {
+	data := []struct {
+		category DrivingLicenseCategory
+		isValid  bool
+	}{
+		{DrivingLicenseA, true},
+		{DrivingLicenseB, true},
+		{DrivingLicenseC, true},
+		{DrivingLicenseD, true},
+		{100, false},
+		{-100, false},
+	}
+
+	for _, val := range data {
+		if act := val.category.IsValid(); act != val.isValid {
+			t.Errorf("expected: %v, act: %v", val.isValid, act)
+		}
+	}
+}
