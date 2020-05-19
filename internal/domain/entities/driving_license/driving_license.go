@@ -21,15 +21,15 @@ var (
 )
 
 type DrivingLicense struct {
-	id           *valuetypes.DrivingLicenseID
+	id           valuetypes.DrivingLicenseID
 	category     valuetypes.DrivingLicenseCategory
-	name         *commonTypes.Name
-	birthday     *time.Time
-	issued       *time.Time
-	expired      *time.Time
-	residence    *valuetypes.DrivingLicenseResidence
+	name         commonTypes.Name
+	birthday     time.Time
+	issued       time.Time
+	expired      time.Time
+	residence    valuetypes.DrivingLicenseResidence
 	specialMarks string
-	validation   *valuetypes.DrivingLicenseValidation
+	validation   valuetypes.DrivingLicenseValidation
 }
 
 func NewDrivingLicense(
@@ -79,15 +79,15 @@ func NewDrivingLicense(
 	}
 
 	return &DrivingLicense{
-		id:           id,
+		id:           *id,
 		category:     category,
-		name:         name,
-		birthday:     birthday,
-		issued:       issued,
-		expired:      expired,
-		residence:    residence,
+		name:         *name,
+		birthday:     *birthday,
+		issued:       *issued,
+		expired:      *expired,
+		residence:    *residence,
 		specialMarks: specialMarks,
-		validation:   validation,
+		validation:   *validation,
 	}, nil
 }
 
@@ -106,7 +106,7 @@ func (d *DrivingLicense) ChangeName(name *commonTypes.Name) {
 		return
 	}
 
-	d.name = name
+	d.name = *name
 }
 
 func (d *DrivingLicense) ChangeBirthday(birthday *time.Time) {
@@ -114,7 +114,7 @@ func (d *DrivingLicense) ChangeBirthday(birthday *time.Time) {
 		return
 	}
 
-	d.birthday = birthday
+	d.birthday = *birthday
 }
 
 func (d *DrivingLicense) ChangeIssued(issued *time.Time) {
@@ -122,7 +122,7 @@ func (d *DrivingLicense) ChangeIssued(issued *time.Time) {
 		return
 	}
 
-	d.issued = issued
+	d.issued = *issued
 }
 
 func (d *DrivingLicense) ChangeExpired(expired *time.Time) {
@@ -130,7 +130,7 @@ func (d *DrivingLicense) ChangeExpired(expired *time.Time) {
 		return
 	}
 
-	d.expired = expired
+	d.expired = *expired
 }
 
 func (d *DrivingLicense) ChangeResidence(residence *valuetypes.DrivingLicenseResidence) {
@@ -138,7 +138,7 @@ func (d *DrivingLicense) ChangeResidence(residence *valuetypes.DrivingLicenseRes
 		return
 	}
 
-	d.residence = residence
+	d.residence = *residence
 }
 
 func (d *DrivingLicense) ChangeSpecialMark(specialMark string) {
@@ -150,12 +150,12 @@ func (d *DrivingLicense) ChangeValidation(validation *valuetypes.DrivingLicenseV
 		return
 	}
 
-	d.validation = validation
+	d.validation = *validation
 }
 
 //Getters
 
-func (d *DrivingLicense) GetID() *valuetypes.DrivingLicenseID {
+func (d *DrivingLicense) GetID() valuetypes.DrivingLicenseID {
 	return d.id
 }
 
@@ -163,23 +163,23 @@ func (d *DrivingLicense) GetCategory() valuetypes.DrivingLicenseCategory {
 	return d.category
 }
 
-func (d *DrivingLicense) GetName() *commonTypes.Name {
+func (d *DrivingLicense) GetName() commonTypes.Name {
 	return d.name
 }
 
-func (d *DrivingLicense) GetBirthday() *time.Time {
+func (d *DrivingLicense) GetBirthday() time.Time {
 	return d.birthday
 }
 
-func (d *DrivingLicense) GetIssued() *time.Time {
+func (d *DrivingLicense) GetIssued() time.Time {
 	return d.issued
 }
 
-func (d *DrivingLicense) GetExpired() *time.Time {
+func (d *DrivingLicense) GetExpired() time.Time {
 	return d.expired
 }
 
-func (d *DrivingLicense) GetResidence() *valuetypes.DrivingLicenseResidence {
+func (d *DrivingLicense) GetResidence() valuetypes.DrivingLicenseResidence {
 	return d.residence
 }
 
@@ -187,6 +187,6 @@ func (d *DrivingLicense) GetSpecialMarks() string {
 	return d.specialMarks
 }
 
-func (d *DrivingLicense) GetValidation() *valuetypes.DrivingLicenseValidation {
+func (d *DrivingLicense) GetValidation() valuetypes.DrivingLicenseValidation {
 	return d.validation
 }

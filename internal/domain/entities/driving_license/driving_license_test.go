@@ -187,7 +187,7 @@ func TestDrivingLicense_Getters(t *testing.T) {
 		specialMarks,
 		validation)
 
-	if act := dl.GetID(); act != id {
+	if act := dl.GetID(); act != *id {
 		t.Errorf("expected: %v, act: %v", id, act)
 	}
 
@@ -195,23 +195,23 @@ func TestDrivingLicense_Getters(t *testing.T) {
 		t.Errorf("expected: %v, act: %v", category, act)
 	}
 
-	if act := dl.GetName(); act != name {
+	if act := dl.GetName(); act != *name {
 		t.Errorf("expected: %v, act: %v", name, act)
 	}
 
-	if act := dl.GetBirthday(); act != &birthday {
+	if act := dl.GetBirthday(); act != birthday {
 		t.Errorf("expected: %v, act: %v", &birthday, act)
 	}
 
-	if act := dl.GetIssued(); act != &issued {
+	if act := dl.GetIssued(); act != issued {
 		t.Errorf("expected: %v, act: %v", &issued, act)
 	}
 
-	if act := dl.GetExpired(); act != &expired {
+	if act := dl.GetExpired(); act != expired {
 		t.Errorf("expected: %v, act: %v", &expired, act)
 	}
 
-	if act := dl.GetResidence(); act != residence {
+	if act := dl.GetResidence(); act != *residence {
 		t.Errorf("expected: %v, act: %v", residence, act)
 	}
 
@@ -219,7 +219,7 @@ func TestDrivingLicense_Getters(t *testing.T) {
 		t.Errorf("expected: %v, act: %v", specialMarks, act)
 	}
 
-	if act := dl.GetValidation(); act != validation {
+	if act := dl.GetValidation(); act != *validation {
 		t.Errorf("expected: %v, act: %v", validation, act)
 	}
 }
@@ -251,27 +251,27 @@ func TestDrivingLicense_Setters(t *testing.T) {
 	}
 
 	dl.ChangeName(newName)
-	if act := dl.GetName(); act != newName {
+	if act := dl.GetName(); act != *newName {
 		t.Errorf("expected: %v, act: %v", newName, act)
 	}
 
 	dl.ChangeBirthday(&newBirthday)
-	if act := dl.GetBirthday(); act != &newBirthday {
+	if act := dl.GetBirthday(); act != newBirthday {
 		t.Errorf("expected: %v, act: %v", &newBirthday, act)
 	}
 
 	dl.ChangeIssued(&newIssued)
-	if act := dl.GetIssued(); act != &newIssued {
+	if act := dl.GetIssued(); act != newIssued {
 		t.Errorf("expected: %v, act: %v", &newIssued, act)
 	}
 
 	dl.ChangeExpired(&newExpired)
-	if act := dl.GetExpired(); act != &newExpired {
+	if act := dl.GetExpired(); act != newExpired {
 		t.Errorf("expected: %v, act: %v", &newExpired, act)
 	}
 
 	dl.ChangeResidence(newResidence)
-	if act := dl.GetResidence(); act != newResidence {
+	if act := dl.GetResidence(); act != *newResidence {
 		t.Errorf("expected: %v, act: %v", newResidence, act)
 	}
 
@@ -281,7 +281,7 @@ func TestDrivingLicense_Setters(t *testing.T) {
 	}
 
 	dl.ChangeValidation(newValidation)
-	if act := dl.GetValidation(); act != newValidation {
+	if act := dl.GetValidation(); act != *newValidation {
 		t.Errorf("expected: %v, act: %v", newValidation, act)
 	}
 }

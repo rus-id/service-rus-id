@@ -140,27 +140,27 @@ func TestPassport_Getters(t *testing.T) {
 		registration,
 		validation)
 
-	if act := passport.GetID(); act != id {
+	if act := passport.GetID(); act != *id {
 		t.Errorf("expected: %v, act: %v", id, act)
 	}
 
-	if act := passport.GetName(); act != name {
+	if act := passport.GetName(); act != *name {
 		t.Errorf("expected: %v, act: %v", name, act)
 	}
 
-	if act := passport.GetBirthday(); act != &birthday {
+	if act := passport.GetBirthday(); act != birthday {
 		t.Errorf("expected: %v, act: %v", &birthday, act)
 	}
 
-	if act := passport.GetIssued(); act != issued {
+	if act := passport.GetIssued(); act != *issued {
 		t.Errorf("expected: %v, act: %v", &issued, act)
 	}
 
-	if act := passport.GetRegistration(); act != registration {
+	if act := passport.GetRegistration(); act != *registration {
 		t.Errorf("expected: %v, act: %v", registration, act)
 	}
 
-	if act := passport.GetValidation(); act != validation {
+	if act := passport.GetValidation(); act != *validation {
 		t.Errorf("expected: %v, act: %v", validation, act)
 	}
 }
@@ -184,27 +184,27 @@ func TestPassport_Setters(t *testing.T) {
 		validation)
 
 	passport.ChangeName(newName)
-	if act := passport.GetName(); act != newName {
+	if act := passport.GetName(); act != *newName {
 		t.Errorf("expected: %v, act: %v", newName, act)
 	}
 
 	passport.ChangeBirthday(&newBirthday)
-	if act := passport.GetBirthday(); act != &newBirthday {
+	if act := passport.GetBirthday(); act != newBirthday {
 		t.Errorf("expected: %v, act: %v", &newBirthday, act)
 	}
 
 	passport.ChangeIssued(newIssued)
-	if act := passport.GetIssued(); act != newIssued {
+	if act := passport.GetIssued(); act != *newIssued {
 		t.Errorf("expected: %v, act: %v", &newIssued, act)
 	}
 
 	passport.ChangeRegistration(newRegistration)
-	if act := passport.GetRegistration(); act != newRegistration {
+	if act := passport.GetRegistration(); act != *newRegistration {
 		t.Errorf("expected: %v, act: %v", newRegistration, act)
 	}
 
 	passport.ChangeValidation(newValidation)
-	if act := passport.GetValidation(); act != newValidation {
+	if act := passport.GetValidation(); act != *newValidation {
 		t.Errorf("expected: %v, act: %v", newValidation, act)
 	}
 }

@@ -11,6 +11,7 @@ run:
 .PHONY:test
 test:
 	echo "testing.."
+	go clean -testcache
 	go test -v -cover -tags=entities ./...
 
 .DEFAULT_GOAL := run

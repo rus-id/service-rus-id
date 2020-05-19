@@ -18,12 +18,12 @@ var (
 )
 
 type Passport struct {
-	id           *valuetypes.PassportID
-	name         *commonTypes.Name
-	birthday     *time.Time
-	issued       *valuetypes.PassportIssue
-	registration *commonTypes.Address
-	validation   *valuetypes.PassportValidation
+	id           valuetypes.PassportID
+	name         commonTypes.Name
+	birthday     time.Time
+	issued       valuetypes.PassportIssue
+	registration commonTypes.Address
+	validation   valuetypes.PassportValidation
 }
 
 func NewPassport(
@@ -58,12 +58,12 @@ func NewPassport(
 	}
 
 	return &Passport{
-		id:           id,
-		name:         name,
-		birthday:     birthday,
-		issued:       issued,
-		registration: registration,
-		validation:   validation,
+		id:           *id,
+		name:         *name,
+		birthday:     *birthday,
+		issued:       *issued,
+		registration: *registration,
+		validation:   *validation,
 	}, nil
 }
 
@@ -74,7 +74,7 @@ func (p *Passport) ChangeName(name *commonTypes.Name) {
 		return
 	}
 
-	p.name = name
+	p.name = *name
 }
 
 func (p *Passport) ChangeBirthday(birthday *time.Time) {
@@ -82,7 +82,7 @@ func (p *Passport) ChangeBirthday(birthday *time.Time) {
 		return
 	}
 
-	p.birthday = birthday
+	p.birthday = *birthday
 }
 
 func (p *Passport) ChangeIssued(issued *valuetypes.PassportIssue) {
@@ -90,7 +90,7 @@ func (p *Passport) ChangeIssued(issued *valuetypes.PassportIssue) {
 		return
 	}
 
-	p.issued = issued
+	p.issued = *issued
 }
 
 func (p *Passport) ChangeRegistration(registration *commonTypes.Address) {
@@ -98,7 +98,7 @@ func (p *Passport) ChangeRegistration(registration *commonTypes.Address) {
 		return
 	}
 
-	p.registration = registration
+	p.registration = *registration
 }
 
 func (p *Passport) ChangeValidation(validation *valuetypes.PassportValidation) {
@@ -106,31 +106,31 @@ func (p *Passport) ChangeValidation(validation *valuetypes.PassportValidation) {
 		return
 	}
 
-	p.validation = validation
+	p.validation = *validation
 }
 
 // Getters
 
-func (p *Passport) GetID() *valuetypes.PassportID {
+func (p *Passport) GetID() valuetypes.PassportID {
 	return p.id
 }
 
-func (p *Passport) GetName() *commonTypes.Name {
+func (p *Passport) GetName() commonTypes.Name {
 	return p.name
 }
 
-func (p *Passport) GetBirthday() *time.Time {
+func (p *Passport) GetBirthday() time.Time {
 	return p.birthday
 }
 
-func (p *Passport) GetIssued() *valuetypes.PassportIssue {
+func (p *Passport) GetIssued() valuetypes.PassportIssue {
 	return p.issued
 }
 
-func (p *Passport) GetRegistration() *commonTypes.Address {
+func (p *Passport) GetRegistration() commonTypes.Address {
 	return p.registration
 }
 
-func (p *Passport) GetValidation() *valuetypes.PassportValidation {
+func (p *Passport) GetValidation() valuetypes.PassportValidation {
 	return p.validation
 }
