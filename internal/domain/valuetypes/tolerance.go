@@ -1,6 +1,7 @@
 package valuetypes
 
 import (
+	"errors"
 	"fmt"
 )
 
@@ -13,6 +14,8 @@ const (
 	AccessorPassport
 	AccessorDriverLicense
 )
+
+var ErrInvalidUserID = errors.New("invalid user ID")
 
 func (a Accessor) String() string {
 	switch a {
@@ -36,8 +39,12 @@ type Tolerance struct {
 	accessors []Accessor
 }
 
-func NewTolerance(id UserID, accessors []Accessor) *Tolerance {
-	return &Tolerance{id: id, accessors: accessors}
+func NewTolerance(id *UserID, accessors []Accessor) (*Tolerance, error) {
+	if id == nil {
+		return nil, ErrInvalidUserID
+	}
+
+	return &Tolerance{id: *id, accessors: accessors}, nil
 }
 
 func (t *Tolerance) AddFullAccess() *Tolerance {
@@ -48,7 +55,8 @@ func (t *Tolerance) AddFullAccess() *Tolerance {
 		AccessorPassport,
 		AccessorDriverLicense}
 
-	return NewTolerance(t.id, accessors)
+	tolerance, _ := NewTolerance(&t.id, accessors)
+	return tolerance
 }
 
 func (t *Tolerance) AddAccess(accessor Accessor) *Tolerance {
@@ -57,7 +65,8 @@ func (t *Tolerance) AddAccess(accessor Accessor) *Tolerance {
 	}
 
 	accessors := append(t.accessors, accessor)
-	return NewTolerance(t.id, accessors)
+	tolerance, _ := NewTolerance(&t.id, accessors)
+	return tolerance
 }
 
 func (t *Tolerance) RemoveAccess(accessor Accessor) *Tolerance {
@@ -74,7 +83,8 @@ func (t *Tolerance) RemoveAccess(accessor Accessor) *Tolerance {
 		accessors = append(accessors, val)
 	}
 
-	return NewTolerance(t.id, accessors)
+	tolerance, _ := NewTolerance(&t.id, accessors)
+	return tolerance
 }
 
 func (t *Tolerance) HasAccess(accessor Accessor) bool {
@@ -94,7 +104,7 @@ func (t *Tolerance) String() string {
 			break
 		}
 
-		text += fmt.Sprintf(" %v, ", val.String())
+		text += fmt.Sprintf("%v, ", val.String())
 	}
 
 	return text

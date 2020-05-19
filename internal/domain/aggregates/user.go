@@ -12,33 +12,33 @@ import (
 )
 
 type UserAggregate interface {
-	GetSnapshot() *snapshots.UserSnapshot
 	GetID() valuetypes.UserID
+	GetSnapshot() *snapshots.UserSnapshot
 }
 
 type User struct {
-	ID               valuetypes.UserID
-	Phone            *valuetypes.Phone
-	Passport         *passport.Passport
-	DrivingLicense   *driving_license.DrivingLicense
-	Snils            valuetypes.Snils
-	Inn              valuetypes.Inn
-	Photo            valuetypes.Photo
-	Card             valuetypes.Card
-	RegistrationDate time.Time
-	Rating           *valuetypes.Rating
-	Tolerances       map[valuetypes.UserID]*valuetypes.Tolerance
-	Status           valuetypes.UserState
-	IsRemoved        bool
-	Version          int64
+	id               *valuetypes.UserID
+	phone            *valuetypes.Phone
+	passport         *passport.Passport
+	drivingLicense   *driving_license.DrivingLicense
+	snils            *valuetypes.Snils
+	inn              *valuetypes.Inn
+	photo            *valuetypes.Photo
+	card             *valuetypes.Card
+	registrationDate *time.Time
+	rating           *valuetypes.Rating
+	tolerances       map[valuetypes.UserID]*valuetypes.Tolerance
+	status           valuetypes.UserState
+	isRemoved        bool
+	version          int64
 }
 
 func NewUser(
-	ID valuetypes.UserID,
-	snils valuetypes.Snils) *User {
+	id *valuetypes.UserID,
+	snils *valuetypes.Snils) *User {
 	return &User{
-		ID:    ID,
-		Snils: snils,
+		id:    id,
+		snils: snils,
 	}
 }
 

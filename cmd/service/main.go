@@ -24,8 +24,7 @@ func main() {
 
 	logger.Log.
 		WithFields(logrus.Fields{
-			"ID":    user.ID,
-			"SNILS": user.Snils,
+			"User": user,
 		}).Info("user created")
 
 	logger.Log.WithFields(logrus.Fields{

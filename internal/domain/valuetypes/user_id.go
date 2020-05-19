@@ -6,16 +6,19 @@ import (
 
 type UserID uuid.UUID
 
-func CreateUserID() UserID {
-	ID := uuid.New()
-	return UserID(ID)
+func CreateUserID() *UserID {
+	id := uuid.New()
+
+	userID := UserID(id)
+	return &userID
 }
 
-func NewUserID(value string) (UserID, error) {
+func NewUserID(value string) (*UserID, error) {
 	id, err := uuid.Parse(value)
 	if err != nil {
-		return UserID{}, err
+		return nil, err
 	}
 
-	return UserID(id), nil
+	userID := UserID(id)
+	return &userID, nil
 }

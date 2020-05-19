@@ -20,7 +20,36 @@ func TestAccessor_String(t *testing.T) {
 
 	for _, val := range data {
 		if act := val.accessor.String(); act != val.text {
-			t.Errorf("expected text: %s, act: %s", val.text, act)
+			t.Errorf("expected: %q, act: %q", val.text, act)
+		}
+	}
+}
+
+func TestNewTolerance(t *testing.T) {
+	data := []struct {
+		userID    *UserID
+		accessors []Accessor
+		err       error
+	}{
+		{CreateUserID(), []Accessor{AccessorContacts}, nil},
+		{CreateUserID(), nil, nil},
+		{nil, []Accessor{AccessorContacts}, ErrInvalidUserID},
+		{nil, nil, ErrInvalidUserID},
+	}
+
+	for _, val := range data {
+		act, err := NewTolerance(val.userID, val.accessors)
+
+		if err != val.err {
+			t.Errorf("expected err: %v, act: %v", val.err, err)
+		}
+
+		if err != nil {
+			continue
+		}
+
+		if len(act.GetAccessors()) != len(val.accessors) {
+			t.Errorf("invalid accessors")
 		}
 	}
 }
@@ -34,7 +63,7 @@ func TestTolerance_AddFullAccess(t *testing.T) {
 		AccessorPassport,
 		AccessorDriverLicense}
 
-	tolerance := NewTolerance(userID, nil)
+	tolerance, _ := NewTolerance(userID, nil)
 	if act := len(tolerance.GetAccessors()); act != 0 {
 		t.Errorf("accessories must be empty, act %v", act)
 	}
@@ -64,7 +93,7 @@ func TestTolerance_AddAccess(t *testing.T) {
 		{AccessorDriverLicense, false},
 	}
 
-	tolerance := NewTolerance(userID, nil)
+	tolerance, _ := NewTolerance(userID, nil)
 	if act := len(tolerance.GetAccessors()); act != 0 {
 		t.Errorf("accessories must be empty, act %v", act)
 	}
@@ -96,7 +125,7 @@ func TestTolerance_RemoveAccess(t *testing.T) {
 		{AccessorDriverLicense, true},
 	}
 
-	tolerance := NewTolerance(userID, nil)
+	tolerance, _ := NewTolerance(userID, nil)
 	tolerance = tolerance.AddFullAccess()
 	if act := len(tolerance.GetAccessors()); act != 5 {
 		t.Errorf("accessories must me 5, act %v", act)
@@ -129,7 +158,7 @@ func TestTolerance_Idempotent(t *testing.T) {
 		{AccessorDriverLicense, true},
 	}
 
-	tolerance := NewTolerance(userID, nil)
+	tolerance, _ := NewTolerance(userID, nil)
 	tolerance = tolerance.AddFullAccess()
 	if act := len(tolerance.GetAccessors()); act != 5 {
 		t.Errorf("accessories must me 5, act %v", act)
@@ -153,4 +182,30 @@ func TestTolerance_Idempotent(t *testing.T) {
 			t.Errorf("expected %v, act: %v", val.hasAccess, act)
 		}
 	}
+}
+
+func TestTolerance_String(t *testing.T) {
+	userID, _ := NewUserID("059b4e12-6983-4806-bd5a-cc3433e78f66")
+	accessors := []Accessor{
+		AccessorContacts,
+		AccessorProfile,
+		AccessorPhone,
+		AccessorPassport,
+		AccessorDriverLicense}
+
+	data := []struct {
+		accessors []Accessor
+		exp       string
+	}{
+		{accessors, "accessors: contacts, profile, phone, passport, driver license"},
+		{[]Accessor{}, "accessors: "},
+	}
+
+	for _, val := range data {
+		tolerance, _ := NewTolerance(userID, val.accessors)
+		if act := tolerance.String(); act != val.exp {
+			t.Errorf("expexted %q, act %q", val.exp, act)
+		}
+	}
+
 }

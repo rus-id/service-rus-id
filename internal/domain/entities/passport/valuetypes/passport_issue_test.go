@@ -81,6 +81,6 @@ func TestPassportIssue_String(t *testing.T) {
 	issue, _ := NewPassportIssue("УФМС ХХХ", date, "770-04")
 
 	if act := issue.String(); act != expected {
-		t.Errorf("expected: %v, actual: %v", expected, act)
+		t.Errorf("expected: %q, actual: %q", expected, act)
 	}
 }

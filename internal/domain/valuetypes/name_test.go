@@ -113,7 +113,7 @@ func TestName_String(t *testing.T) {
 
 		act := name.String()
 		if act != val.expected {
-			t.Errorf("expected: %v, act: %v", val.expected, act)
+			t.Errorf("expected: %q, act: %q", val.expected, act)
 		}
 	}
 }

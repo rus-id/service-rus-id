@@ -13,12 +13,13 @@ var snilsRegexp = regexp.MustCompile("^[0-9]{11}$")
 
 type Snils string
 
-func NewSnils(value string) (Snils, error) {
+func NewSnils(value string) (*Snils, error) {
 	if ok, err := ValidateSnils(value); !ok {
-		return "", err
+		return nil, err
 	}
 
-	return Snils(value), nil
+	snils := Snils(value)
+	return &snils, nil
 }
 
 func (s Snils) String() string {

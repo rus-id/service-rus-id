@@ -12,6 +12,5 @@ func NewAddress(address string) (*Address, error) {
 	}
 
 	value := Address(address)
-
 	return &value, nil
 }

@@ -12,12 +12,13 @@ var innRegexp = regexp.MustCompile("^[0-9]+$")
 
 type Inn string
 
-func NewInn(value string) (Inn, error) {
+func NewInn(value string) (*Inn, error) {
 	if ok, err := ValidateInn(value); !ok {
-		return "", err
+		return nil, err
 	}
 
-	return Inn(value), nil
+	inn := Inn(value)
+	return &inn, nil
 }
 
 func ValidateInn(value string) (bool, error) {

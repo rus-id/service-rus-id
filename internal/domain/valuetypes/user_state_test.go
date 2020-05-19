@@ -18,7 +18,7 @@ func TestUserStatus_String(t *testing.T) {
 
 	for _, val := range data {
 		if act := val.state.String(); act != val.expected {
-			t.Errorf("expected: %v, act: %v", val.expected, act)
+			t.Errorf("expected: %q, act: %q", val.expected, act)
 		}
 	}
 }

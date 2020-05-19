@@ -36,6 +36,6 @@ func TestDrivingLicenseValidation_String(t *testing.T) {
 	act := NewDrivingLicenseValidation(true, false).String()
 
 	if act != expected {
-		t.Errorf("expected text: %s, act: %s", expected, act)
+		t.Errorf("expected text: %q, act: %q", expected, act)
 	}
 }

@@ -67,6 +67,6 @@ func TestPhone_String(t *testing.T) {
 	phone, _ := NewPhone(RusCountryCode, "9039615321")
 
 	if act := phone.String(); act != exp {
-		t.Errorf("expected: %v, actual: %v", exp, act)
+		t.Errorf("expected: %q, actual: %q", exp, act)
 	}
 }

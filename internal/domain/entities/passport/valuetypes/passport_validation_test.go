@@ -49,6 +49,6 @@ func TestPassport_String(t *testing.T) {
 	act := NewPassportValidation(true, false, true, false).String()
 
 	if act != expected {
-		t.Errorf("expected text: %s, act: %s", expected, act)
+		t.Errorf("expected text: %q, act: %q", expected, act)
 	}
 }

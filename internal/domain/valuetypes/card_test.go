@@ -39,7 +39,7 @@ func TestPaymentSystem_String(t *testing.T) {
 	for _, val := range paymentSystemData {
 		system, _ := GetPaymentSystem(val.number)
 		if text := system.String(); text != val.text {
-			t.Errorf("expected: %v, actual: %v", val.text, text)
+			t.Errorf("expected: %q, actual: %q", val.text, text)
 		}
 	}
 }
@@ -148,6 +148,6 @@ func TestCard_String(t *testing.T) {
 	expected := "VISA 4444333322221111. Expired 04/20."
 
 	if act := card.String(); act != expected {
-		t.Errorf("expected: %v, actual: %v", expired, act)
+		t.Errorf("expected: %q, actual: %q", expired, act)
 	}
 }
