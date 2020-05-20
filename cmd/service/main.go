@@ -1,7 +1,6 @@
 package main
 
 import (
-	"github.com/bgoldovsky/service-rus-id/internal/domain/aggregates"
 	"github.com/bgoldovsky/service-rus-id/internal/domain/valuetypes"
 	"github.com/bgoldovsky/service-rus-id/internal/logger"
 	"github.com/sirupsen/logrus"
@@ -9,8 +8,8 @@ import (
 
 func main() {
 
-	userID := valuetypes.CreateUserID()
-	snils, err := valuetypes.NewSnils("59650418527")
+	//userID := valuetypes.CreateUserID()
+	_, err := valuetypes.NewSnils("59650418527")
 	if err != nil {
 		logger.Log.
 			WithFields(logrus.Fields{
@@ -19,12 +18,12 @@ func main() {
 		return
 	}
 
-	user := aggregates.NewUser(userID, snils)
+	//user, err := aggregates.NewUser(userID, snils)
 	//user := domain.NewUser(userID, snils)
 
 	logger.Log.
 		WithFields(logrus.Fields{
-			"User": user,
+			//	"User": user,
 		}).Info("user created")
 
 	logger.Log.WithFields(logrus.Fields{
