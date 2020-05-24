@@ -1,6 +1,8 @@
 package user
 
 import (
+	"fmt"
+
 	"github.com/bgoldovsky/service-rus-id/internal/domain/entities/driving_license"
 	"github.com/bgoldovsky/service-rus-id/internal/domain/entities/passport"
 	"github.com/bgoldovsky/service-rus-id/internal/domain/valuetypes"
@@ -75,4 +77,8 @@ func (u *Nil) Activate() {
 }
 
 func (u *Nil) Remove() {
+}
+
+func (u *Nil) String() string {
+	return fmt.Sprintf("User Aggregate\nID: %v.\nIs Removed: %v.\n", u.id, u.IsRemoved())
 }

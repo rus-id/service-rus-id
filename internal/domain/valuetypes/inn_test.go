@@ -63,3 +63,14 @@ func TestValidateInn(t *testing.T) {
 		}
 	}
 }
+
+func TestInn_String(t *testing.T) {
+	data := []string{"926902267890", "889373498613"}
+
+	for _, val := range data {
+		inn, _ := NewInn(val)
+		if act := inn.String(); act != val {
+			t.Errorf("expected: %q, actual: %q", val, inn)
+		}
+	}
+}

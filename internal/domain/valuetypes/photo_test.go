@@ -30,3 +30,19 @@ func TestNewPhoto_Error(t *testing.T) {
 		t.Errorf("expected error: %v, actual: %v", ErrInvalidPhoto, err)
 	}
 }
+
+func TestPhoto_String(t *testing.T) {
+	data := []struct {
+		photo Photo
+		exp   string
+	}{
+		{[]byte{10, 20, 30, 40, 50}, "Photo uploaded"},
+		{[]byte{}, "Photo not exist"},
+	}
+
+	for _, val := range data {
+		if act := val.photo.String(); act != val.exp {
+			t.Errorf("expected: %q, act: %v", val.exp, act)
+		}
+	}
+}

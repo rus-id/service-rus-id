@@ -19,3 +19,7 @@ func NewResidence(value string) (*DrivingLicenseResidence, error) {
 func (r DrivingLicenseResidence) GetValue() string {
 	return r.value
 }
+
+func (r DrivingLicenseResidence) String() string {
+	return r.value
+}

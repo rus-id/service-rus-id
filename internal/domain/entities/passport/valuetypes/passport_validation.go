@@ -30,7 +30,7 @@ func (v PassportValidation) GetDocument() bool {
 }
 
 func (v PassportValidation) String() string {
-	return fmt.Sprintf("UFMS valid: %v. MVD valid: %v. FSSP valid: %v Document valid: %v.",
+	return fmt.Sprintf("UFMS valid: %v. MVD valid: %v. FSSP valid: %v Document valid: %v",
 		v.ufms,
 		v.mvd,
 		v.fssp,

@@ -2,6 +2,7 @@ package passport
 
 import (
 	"errors"
+	"fmt"
 	"time"
 
 	"github.com/bgoldovsky/service-rus-id/internal/domain/entities/passport/valuetypes"
@@ -133,4 +134,14 @@ func (p *Passport) GetRegistration() commonTypes.Address {
 
 func (p *Passport) GetValidation() valuetypes.PassportValidation {
 	return p.validation
+}
+
+func (p *Passport) String() string {
+	return fmt.Sprintf("ID: %v. Name: %v. Birthday: %v. Issued: %v. Registration: %v. Validation: %v",
+		p.id,
+		p.name,
+		p.birthday.Format("02.01.2006"),
+		p.issued,
+		p.registration,
+		p.validation)
 }

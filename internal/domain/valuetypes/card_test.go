@@ -145,7 +145,7 @@ func TestCard_String(t *testing.T) {
 	expired := time.Date(2020, time.Month(4), 9, 1, 10, 30, 0, time.UTC)
 	card, _ := NewCard("4444333322221111", expired)
 
-	expected := "VISA 4444333322221111. Expired 04/20."
+	expected := "VISA 4444333322221111. Expired 04/20"
 
 	if act := card.String(); act != expected {
 		t.Errorf("expected: %q, actual: %q", expired, act)

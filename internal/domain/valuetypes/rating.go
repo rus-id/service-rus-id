@@ -1,6 +1,9 @@
 package valuetypes
 
-import "errors"
+import (
+	"errors"
+	"fmt"
+)
 
 var (
 	ErrInvalidPositiveRate = errors.New("invalid negative rate")
@@ -44,4 +47,8 @@ func (r Rating) GetNegative() int {
 
 func (r Rating) GetTotal() int {
 	return r.positive - r.negative
+}
+
+func (r Rating) String() string {
+	return fmt.Sprintf("Total %d. Positive %d. Negative %d", r.GetTotal(), r.positive, r.negative)
 }

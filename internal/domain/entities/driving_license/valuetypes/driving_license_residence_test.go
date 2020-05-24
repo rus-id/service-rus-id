@@ -39,3 +39,12 @@ func TestResidence_Getters(t *testing.T) {
 		t.Errorf("expected: %v, act: %v", exp, act)
 	}
 }
+
+func TestResidence_String(t *testing.T) {
+	const exp = "123"
+	residence, _ := NewResidence(exp)
+
+	if act := residence.String(); act != exp {
+		t.Errorf("expected: %v, act: %v", exp, act)
+	}
+}

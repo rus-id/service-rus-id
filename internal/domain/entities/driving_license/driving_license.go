@@ -2,6 +2,7 @@ package driving_license
 
 import (
 	"errors"
+	"fmt"
 	"time"
 
 	"github.com/bgoldovsky/service-rus-id/internal/domain/entities/driving_license/valuetypes"
@@ -189,4 +190,17 @@ func (d *DrivingLicense) GetSpecialMarks() string {
 
 func (d *DrivingLicense) GetValidation() valuetypes.DrivingLicenseValidation {
 	return d.validation
+}
+
+func (d *DrivingLicense) String() string {
+	return fmt.Sprintf("ID: %v. Category %v. Name: %v. Birthday: %v. Issued: %v. Exppired: %v. Residence: %v. Special Marks: %v. Validation: %v",
+		d.id,
+		d.category,
+		d.name,
+		d.birthday.Format("02.01.2006"),
+		d.issued.Format("02.01.2006"),
+		d.expired.Format("02.01.2006"),
+		d.residence,
+		d.specialMarks,
+		d.validation)
 }

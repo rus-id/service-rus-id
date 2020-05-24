@@ -92,5 +92,5 @@ func (c Card) IsExpired(now time.Time) bool {
 }
 
 func (c Card) String() string {
-	return fmt.Sprintf("%s %s. Expired %s.", c.system, c.number, c.expired.Format("01/06"))
+	return fmt.Sprintf("%s %s. Expired %s", c.system, c.number, c.expired.Format("01/06"))
 }

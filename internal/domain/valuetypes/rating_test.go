@@ -106,3 +106,12 @@ func TestRating_Getters(t *testing.T) {
 		}
 	}
 }
+
+func TestRating_String(t *testing.T) {
+	const exp = "Total 6. Positive 10. Negative 4"
+	rating, _ := NewRating(10, 4)
+
+	if act := rating.String(); act != exp {
+		t.Errorf("expected: %q, act: %q", exp, act)
+	}
+}

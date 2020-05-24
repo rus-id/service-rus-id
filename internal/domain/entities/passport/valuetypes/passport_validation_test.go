@@ -44,7 +44,7 @@ func TestPassportValidation_Getters(t *testing.T) {
 }
 
 func TestPassport_String(t *testing.T) {
-	const expected = "UFMS valid: true. MVD valid: false. FSSP valid: true Document valid: false."
+	const expected = "UFMS valid: true. MVD valid: false. FSSP valid: true Document valid: false"
 
 	act := NewPassportValidation(true, false, true, false).String()
 

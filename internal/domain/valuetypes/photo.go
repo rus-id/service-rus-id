@@ -14,3 +14,11 @@ func NewPhoto(value []byte) (Photo, error) {
 	photo := Photo(value)
 	return photo, nil
 }
+
+func (s Photo) String() string {
+	if len(s) == 0 {
+		return "Photo not exist"
+	}
+
+	return "Photo uploaded"
+}

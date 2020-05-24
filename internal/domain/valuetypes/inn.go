@@ -84,3 +84,7 @@ func checksumInn(inn []rune, coefficients []int) (int, error) {
 
 	return num % 11 % 10, nil
 }
+
+func (s Inn) String() string {
+	return string(s)
+}
