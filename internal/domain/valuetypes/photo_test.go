@@ -17,8 +17,8 @@ func TestNewPhoto_Success(t *testing.T) {
 		t.Errorf("error occured: %v", err)
 	}
 
-	if !reflect.DeepEqual(photo, &exp) {
-		t.Errorf("expected: %v, actual: %v", &exp, photo)
+	if !reflect.DeepEqual(photo, exp) {
+		t.Errorf("expected: %v, actual: %v", exp, photo)
 	}
 }
 
