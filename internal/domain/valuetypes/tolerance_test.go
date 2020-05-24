@@ -63,12 +63,12 @@ func TestTolerance_AddFullAccess(t *testing.T) {
 		AccessorPassport,
 		AccessorDriverLicense}
 
-	tolerance, _ := NewTolerance(userID, nil)
-	if act := len(tolerance.GetAccessors()); act != 0 {
+	newTolerance, _ := NewTolerance(userID, nil)
+	if act := len(newTolerance.GetAccessors()); act != 0 {
 		t.Errorf("accessories must be empty, act %v", act)
 	}
 
-	tolerance = tolerance.AddFullAccess()
+	tolerance := newTolerance.AddFullAccess()
 	if act := len(tolerance.GetAccessors()); act != 5 {
 		t.Errorf("accessories must be 5, act %v", act)
 	}
@@ -93,12 +93,12 @@ func TestTolerance_AddAccess(t *testing.T) {
 		{AccessorDriverLicense, false},
 	}
 
-	tolerance, _ := NewTolerance(userID, nil)
-	if act := len(tolerance.GetAccessors()); act != 0 {
+	newTolerance, _ := NewTolerance(userID, nil)
+	if act := len(newTolerance.GetAccessors()); act != 0 {
 		t.Errorf("accessories must be empty, act %v", act)
 	}
 
-	tolerance = tolerance.AddAccess(AccessorPhone)
+	tolerance := newTolerance.AddAccess(AccessorPhone)
 	tolerance = tolerance.AddAccess(AccessorPassport)
 
 	if act := len(tolerance.GetAccessors()); act != 2 {
@@ -125,8 +125,8 @@ func TestTolerance_RemoveAccess(t *testing.T) {
 		{AccessorDriverLicense, true},
 	}
 
-	tolerance, _ := NewTolerance(userID, nil)
-	tolerance = tolerance.AddFullAccess()
+	newTolerance, _ := NewTolerance(userID, nil)
+	tolerance := newTolerance.AddFullAccess()
 	if act := len(tolerance.GetAccessors()); act != 5 {
 		t.Errorf("accessories must me 5, act %v", act)
 	}
@@ -158,8 +158,8 @@ func TestTolerance_Idempotent(t *testing.T) {
 		{AccessorDriverLicense, true},
 	}
 
-	tolerance, _ := NewTolerance(userID, nil)
-	tolerance = tolerance.AddFullAccess()
+	newTolerance, _ := NewTolerance(userID, nil)
+	tolerance := newTolerance.AddFullAccess()
 	if act := len(tolerance.GetAccessors()); act != 5 {
 		t.Errorf("accessories must me 5, act %v", act)
 	}

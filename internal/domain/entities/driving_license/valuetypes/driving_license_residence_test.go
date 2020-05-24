@@ -30,3 +30,12 @@ func TestNewResidence(t *testing.T) {
 		}
 	}
 }
+
+func TestResidence_Getters(t *testing.T) {
+	const exp = "123"
+	residence, _ := NewResidence(exp)
+
+	if act := residence.GetValue(); act != exp {
+		t.Errorf("expected: %v, act: %v", exp, act)
+	}
+}

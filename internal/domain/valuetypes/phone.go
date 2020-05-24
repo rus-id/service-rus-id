@@ -33,15 +33,15 @@ func NewPhone(code CountryCode, number string) (*Phone, error) {
 	}, nil
 }
 
-func (p *Phone) GetCode() CountryCode {
+func (p Phone) GetCode() CountryCode {
 	return p.code
 }
 
-func (p *Phone) GetNumber() string {
+func (p Phone) GetNumber() string {
 	return p.number
 }
 
-func (p *Phone) String() string {
+func (p Phone) String() string {
 	runes := []rune(p.number)
 
 	return fmt.Sprintf("+%v(%v)%v-%v-%v",

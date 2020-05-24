@@ -12,16 +12,16 @@ func TestNewName_Success(t *testing.T) {
 
 	data := []struct {
 		first  string
-		middle string
+		middle *string
 		last   string
 	}{
-		{"Boris", middle, "Goldovsky"},
-		{"Boris", emptyMiddle, "Goldovsky"},
-		{"Boris", "", "Goldovsky"},
+		{"Boris", &middle, "Goldovsky"},
+		{"Boris", &emptyMiddle, "Goldovsky"},
+		{"Boris", nil, "Goldovsky"},
 	}
 
 	for _, val := range data {
-		name, err := NewName(val.first, &val.middle, val.last)
+		name, err := NewName(val.first, val.middle, val.last)
 
 		if err != nil {
 			t.Errorf("error occured: %v", err)
@@ -66,14 +66,13 @@ func TestName_Getters(t *testing.T) {
 	emptyMiddle := ""
 
 	data := []struct {
-		first          string
-		middle         *string
-		expectedMiddle string
-		last           string
+		first  string
+		middle *string
+		last   string
 	}{
-		{"Boris", &middle, middle, "Goldovsky"},
-		{"Boris", &emptyMiddle, emptyMiddle, "Goldovsky"},
-		{"Boris", nil, "", "Goldovsky"},
+		{"Boris", &middle, "Goldovsky"},
+		{"Boris", &emptyMiddle, "Goldovsky"},
+		{"Boris", nil, "Goldovsky"},
 	}
 
 	for _, val := range data {
@@ -83,7 +82,7 @@ func TestName_Getters(t *testing.T) {
 			t.Errorf("expected: %v, act: %v", val.last, act)
 		}
 
-		if act := name.GetMiddle(); act != val.expectedMiddle {
+		if act := name.GetMiddle(); act != val.middle {
 			t.Errorf("expected: %v, act: %v", val.middle, act)
 		}
 

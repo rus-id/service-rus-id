@@ -47,7 +47,7 @@ func NewTolerance(id *UserID, accessors []Accessor) (*Tolerance, error) {
 	return &Tolerance{id: *id, accessors: accessors}, nil
 }
 
-func (t *Tolerance) AddFullAccess() *Tolerance {
+func (t Tolerance) AddFullAccess() Tolerance {
 	accessors := []Accessor{
 		AccessorContacts,
 		AccessorProfile,
@@ -56,20 +56,20 @@ func (t *Tolerance) AddFullAccess() *Tolerance {
 		AccessorDriverLicense}
 
 	tolerance, _ := NewTolerance(&t.id, accessors)
-	return tolerance
+	return *tolerance
 }
 
-func (t *Tolerance) AddAccess(accessor Accessor) *Tolerance {
+func (t Tolerance) AddAccess(accessor Accessor) Tolerance {
 	if t.HasAccess(accessor) {
 		return t
 	}
 
 	accessors := append(t.accessors, accessor)
 	tolerance, _ := NewTolerance(&t.id, accessors)
-	return tolerance
+	return *tolerance
 }
 
-func (t *Tolerance) RemoveAccess(accessor Accessor) *Tolerance {
+func (t Tolerance) RemoveAccess(accessor Accessor) Tolerance {
 	if !t.HasAccess(accessor) {
 		return t
 	}
@@ -84,10 +84,10 @@ func (t *Tolerance) RemoveAccess(accessor Accessor) *Tolerance {
 	}
 
 	tolerance, _ := NewTolerance(&t.id, accessors)
-	return tolerance
+	return *tolerance
 }
 
-func (t *Tolerance) HasAccess(accessor Accessor) bool {
+func (t Tolerance) HasAccess(accessor Accessor) bool {
 	for _, val := range t.accessors {
 		if val == accessor {
 			return true

@@ -29,15 +29,15 @@ func NewPassportIssue(organisation string, date time.Time, code string) (*Passpo
 	return &PassportIssue{organisation: organisation, date: date, code: code}, nil
 }
 
-func (pi *PassportIssue) GetOrganisation() string {
+func (pi PassportIssue) GetOrganisation() string {
 	return pi.organisation
 }
 
-func (pi *PassportIssue) GetDate() time.Time {
+func (pi PassportIssue) GetDate() time.Time {
 	return pi.date
 }
 
-func (pi *PassportIssue) GetCode() string {
+func (pi PassportIssue) GetCode() string {
 	return pi.code
 }
 

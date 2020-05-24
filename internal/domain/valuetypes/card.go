@@ -74,23 +74,23 @@ func NewCard(number string, expired time.Time) (*Card, error) {
 	}, nil
 }
 
-func (c *Card) GetNumber() string {
+func (c Card) GetNumber() string {
 	return c.number
 }
 
-func (c *Card) GetLastFour() string {
+func (c Card) GetLastFour() string {
 	runes := []rune(c.number)
 	return string(runes[len(runes)-4:])
 }
 
-func (c *Card) GetExpired() time.Time {
+func (c Card) GetExpired() time.Time {
 	return c.expired
 }
 
-func (c *Card) IsExpired(now time.Time) bool {
+func (c Card) IsExpired(now time.Time) bool {
 	return c.expired.Unix() < now.Unix()
 }
 
-func (c *Card) String() string {
+func (c Card) String() string {
 	return fmt.Sprintf("%s %s. Expired %s.", c.system, c.number, c.expired.Format("01/06"))
 }

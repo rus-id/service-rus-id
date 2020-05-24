@@ -32,23 +32,19 @@ func NewName(first string, middle *string, last string) (*Name, error) {
 	}, nil
 }
 
-func (n *Name) GetFirst() string {
+func (n Name) GetFirst() string {
 	return n.first
 }
 
-func (n *Name) GetMiddle() string {
-	if n.middle == nil {
-		return ""
-	}
-
-	return *n.middle
+func (n Name) GetMiddle() *string {
+	return n.middle
 }
 
-func (n *Name) GetLast() string {
+func (n Name) GetLast() string {
 	return n.last
 }
 
-func (n *Name) String() string {
+func (n Name) String() string {
 	if n.middle == nil || *n.middle == "" {
 		return fmt.Sprintf("%s %s", n.first, n.last)
 	}

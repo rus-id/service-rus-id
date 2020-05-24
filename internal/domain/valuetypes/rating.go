@@ -24,22 +24,24 @@ func NewRating(positive, negative int) (*Rating, error) {
 	return &Rating{negative: negative, positive: positive}, nil
 }
 
-func (r *Rating) AddPositive() {
-	r.positive++
+func (r Rating) AddPositive() Rating {
+	rating, _ := NewRating(r.positive+1, r.negative)
+	return *rating
 }
 
-func (r *Rating) AddNegative() {
-	r.negative++
+func (r Rating) AddNegative() Rating {
+	rating, _ := NewRating(r.positive, r.negative+1)
+	return *rating
 }
 
-func (r *Rating) GetPositive() int {
+func (r Rating) GetPositive() int {
 	return r.positive
 }
 
-func (r *Rating) GetNegative() int {
+func (r Rating) GetNegative() int {
 	return r.negative
 }
 
-func (r *Rating) GetTotal() int {
+func (r Rating) GetTotal() int {
 	return r.positive - r.negative
 }

@@ -31,15 +31,15 @@ func NewPassportID(serial, number string) (*PassportID, error) {
 	return &PassportID{serial: serial, number: number}, nil
 }
 
-func (id *PassportID) GetSerial() string {
+func (id PassportID) GetSerial() string {
 	return id.serial
 }
 
-func (id *PassportID) GetNumber() string {
+func (id PassportID) GetNumber() string {
 	return id.number
 }
 
-func (id *PassportID) String() string {
+func (id PassportID) String() string {
 	serialRunes := []rune(id.serial)
 
 	return fmt.Sprintf("%v %v\t%v",

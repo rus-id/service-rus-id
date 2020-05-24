@@ -53,14 +53,15 @@ func TestRating_Setters(t *testing.T) {
 	}
 
 	for _, val := range data {
-		rating, _ := NewRating(0, 0)
+		newRating, _ := NewRating(0, 0)
 
+		rating := *newRating
 		for i := 0; i < val.positive; i++ {
-			rating.AddPositive()
+			rating = rating.AddPositive()
 		}
 
 		for i := 0; i < val.negative; i++ {
-			rating.AddNegative()
+			rating = rating.AddNegative()
 		}
 
 		if act := rating.GetPositive(); act != val.positive {

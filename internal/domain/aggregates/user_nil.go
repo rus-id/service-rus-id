@@ -5,6 +5,7 @@ import (
 	"github.com/bgoldovsky/service-rus-id/internal/domain/entities/passport"
 	"github.com/bgoldovsky/service-rus-id/internal/domain/snapshots"
 	"github.com/bgoldovsky/service-rus-id/internal/domain/valuetypes"
+	"github.com/google/uuid"
 )
 
 type UserNil struct {
@@ -28,7 +29,10 @@ func (u *UserNil) IsRemoved() bool {
 }
 
 func (u *UserNil) GetSnapshot() *snapshots.UserSnapshot {
-	return nil
+	return &snapshots.UserSnapshot{
+		UserID:    uuid.UUID(u.id),
+		IsRemoved: true,
+	}
 }
 
 func (u *UserNil) ChangeName(_ *valuetypes.Name) {
