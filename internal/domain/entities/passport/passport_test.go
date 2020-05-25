@@ -210,7 +210,7 @@ func TestPassport_Setters(t *testing.T) {
 }
 
 func TestPassport_String(t *testing.T) {
-	const exp = "ID: 77 77\t777777. Name: Boris Goldovsky. Birthday: 09.04.1986. Issued: Issued by MVD, 09.04.2010, code 770-77. Registration: Russia, Moscow. Validation: UFMS valid: true. MVD valid: false. FSSP valid: true Document valid: false"
+	const exp = "ID 77 77 777777; name Boris Goldovsky; birthday 09.04.1986; issued MVD 09.04.2010 code 770-77; registration Russia, Moscow; UFMS valid; MVD not valid; FSSP valid; document not valid;"
 	passport, _ := NewPassport(
 		id,
 		name,

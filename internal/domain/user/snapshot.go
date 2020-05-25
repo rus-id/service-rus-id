@@ -164,7 +164,7 @@ func LoadFromSnapshot(snapshot *Snapshot) (*User, error) {
 		return nil, err
 	}
 
-	registrationDate := time.Unix(snapshot.RegistrationDate, 0)
+	registrationDate := time.Unix(snapshot.RegistrationDate, 0).UTC()
 	state := valuetypes.UserState(snapshot.State)
 
 	user, err := NewUser(&id, name, phone, &registrationDate, rating, state, snapshot.IsRemoved, snapshot.Version)
@@ -204,7 +204,7 @@ func LoadFromSnapshot(snapshot *Snapshot) (*User, error) {
 	}
 
 	if snapshot.CardNumber != nil && snapshot.CardExpires != nil {
-		expires := time.Unix(*snapshot.CardExpires, 0)
+		expires := time.Unix(*snapshot.CardExpires, 0).UTC()
 		user.card, err = valuetypes.NewCard(*snapshot.CardNumber, expires)
 		if err != nil {
 			return nil, err

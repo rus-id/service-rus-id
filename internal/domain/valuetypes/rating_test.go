@@ -108,7 +108,7 @@ func TestRating_Getters(t *testing.T) {
 }
 
 func TestRating_String(t *testing.T) {
-	const exp = "Total 6. Positive 10. Negative 4"
+	const exp = "positive 10; negative 4; total 6;"
 	rating, _ := NewRating(10, 4)
 
 	if act := rating.String(); act != exp {

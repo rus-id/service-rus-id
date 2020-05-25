@@ -80,5 +80,7 @@ func (u *Nil) Remove() {
 }
 
 func (u *Nil) String() string {
-	return fmt.Sprintf("User Aggregate\nID: %v.\nIs Removed: %v.\n", u.id, u.IsRemoved())
+	return fmt.Sprintf("User Aggregate ID %v\nRemoved: %v\n",
+		u.id,
+		true)
 }

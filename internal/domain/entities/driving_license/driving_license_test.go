@@ -11,18 +11,6 @@ import (
 	commonTypes "github.com/bgoldovsky/service-rus-id/internal/domain/valuetypes"
 )
 
-var (
-	id, _        = valuetypes.NewDrivingLicenseID("7777", "777777")
-	category     = valuetypes.DrivingLicenseA
-	name, _      = commonTypes.NewName("Boris", nil, "Goldovsky")
-	birthday     = time.Date(1986, time.Month(4), 9, 1, 10, 30, 0, time.UTC)
-	issued       = time.Date(2010, time.Month(4), 9, 1, 10, 30, 0, time.UTC)
-	expires      = time.Date(2025, time.Month(4), 9, 1, 10, 30, 0, time.UTC)
-	residence, _ = valuetypes.NewResidence("Russia")
-	specialMarks = "empty mark"
-	validation   = valuetypes.NewDrivingLicenseValidation(true, false)
-)
-
 func TestNewDrivingLicense_Success(t *testing.T) {
 	dl, err := NewDrivingLicense(
 		id,
@@ -287,7 +275,7 @@ func TestDrivingLicense_Setters(t *testing.T) {
 }
 
 func TestDrivingLicense_String(t *testing.T) {
-	const exp = "ID: 77 77\t777777. Category A. Name: Boris Goldovsky. Birthday: 09.04.1986. Issued: 09.04.2010. Exppired: 09.04.2025. Residence: Russia. Special Marks: empty mark. Validation: GIBDD valid: true. Document valid: false"
+	const exp = "ID 77 77 777777; category A; name Boris Goldovsky; birthday 09.04.1986; issued 09.04.2010; expires 09.04.2025; residence Russia; marks empty mark; GIBDD valid; document not valid;"
 	dl, _ := NewDrivingLicense(
 		id,
 		category,

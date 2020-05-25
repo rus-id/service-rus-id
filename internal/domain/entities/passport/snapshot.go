@@ -99,8 +99,8 @@ func LoadFromSnapshot(snapshot *Snapshot) (*Passport, error) {
 		return nil, err
 	}
 
-	birthday := time.Unix(snapshot.Birthday, 0)
-	issueDate := time.Unix(snapshot.IssuedDate, 0)
+	birthday := time.Unix(snapshot.Birthday, 0).UTC()
+	issueDate := time.Unix(snapshot.IssuedDate, 0).UTC()
 	issue, err := passValueTypes.NewPassportIssue(snapshot.IssuedOrganisation, issueDate, snapshot.IssuedCode)
 	if err != nil {
 		return nil, err

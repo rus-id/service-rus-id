@@ -95,9 +95,9 @@ func LoadFromSnapshot(snapshot *Snapshot) (*DrivingLicense, error) {
 	}
 
 	category := dlValueTypes.DrivingLicenseCategory(snapshot.Category)
-	birthday := time.Unix(snapshot.Birthday, 0)
-	issued := time.Unix(snapshot.Issued, 0)
-	expires := time.Unix(snapshot.Expires, 0)
+	birthday := time.Unix(snapshot.Birthday, 0).UTC()
+	issued := time.Unix(snapshot.Issued, 0).UTC()
+	expires := time.Unix(snapshot.Expires, 0).UTC()
 
 	residence, err := dlValueTypes.NewResidence(snapshot.Residence)
 	if err != nil {
