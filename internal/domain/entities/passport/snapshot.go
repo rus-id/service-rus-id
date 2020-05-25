@@ -7,7 +7,7 @@ import (
 	"github.com/bgoldovsky/service-rus-id/internal/domain/valuetypes"
 )
 
-type PassportSnapshot struct {
+type Snapshot struct {
 	Serial             string
 	Number             string
 	FirstName          string
@@ -40,8 +40,8 @@ func NewSnapshot(
 	mvdValidation bool,
 	fsspValidation bool,
 	documentValidation bool,
-) PassportSnapshot {
-	return PassportSnapshot{
+) Snapshot {
+	return Snapshot{
 		Serial:             serial,
 		Number:             number,
 		FirstName:          firstName,
@@ -59,7 +59,7 @@ func NewSnapshot(
 	}
 }
 
-func GetSnapshot(passport *Passport) *PassportSnapshot {
+func GetSnapshot(passport *Passport) *Snapshot {
 	if passport == nil {
 		return nil
 	}
@@ -84,7 +84,7 @@ func GetSnapshot(passport *Passport) *PassportSnapshot {
 	return &snapshot
 }
 
-func LoadFromSnapshot(snapshot *PassportSnapshot) (*Passport, error) {
+func LoadFromSnapshot(snapshot *Snapshot) (*Passport, error) {
 	if snapshot == nil {
 		return nil, nil
 	}

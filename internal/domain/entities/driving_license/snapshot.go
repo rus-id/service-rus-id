@@ -7,7 +7,7 @@ import (
 	"github.com/bgoldovsky/service-rus-id/internal/domain/valuetypes"
 )
 
-type DrivingLicenseSnapshot struct {
+type Snapshot struct {
 	Serial             string
 	Number             string
 	Category           int64
@@ -37,8 +37,8 @@ func NewSnapshot(
 	specialMarks string,
 	gibddValidation bool,
 	documentValidation bool,
-) DrivingLicenseSnapshot {
-	return DrivingLicenseSnapshot{
+) Snapshot {
+	return Snapshot{
 		Serial:             serial,
 		Number:             number,
 		Category:           category,
@@ -55,7 +55,7 @@ func NewSnapshot(
 	}
 }
 
-func GetSnapshot(drivingLicense *DrivingLicense) *DrivingLicenseSnapshot {
+func GetSnapshot(drivingLicense *DrivingLicense) *Snapshot {
 	if drivingLicense == nil {
 		return nil
 	}
@@ -79,7 +79,7 @@ func GetSnapshot(drivingLicense *DrivingLicense) *DrivingLicenseSnapshot {
 	return &snapshot
 }
 
-func LoadFromSnapshot(snapshot *DrivingLicenseSnapshot) (*DrivingLicense, error) {
+func LoadFromSnapshot(snapshot *Snapshot) (*DrivingLicense, error) {
 	if snapshot == nil {
 		return nil, nil
 	}

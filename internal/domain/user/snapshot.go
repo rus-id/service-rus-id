@@ -22,8 +22,8 @@ type Snapshot struct {
 	LastName         string
 	CountryCode      int64
 	PhoneNumber      string
-	Passport         *passport.PassportSnapshot
-	DrivingLicense   *driving_license.DrivingLicenseSnapshot
+	Passport         *passport.Snapshot
+	DrivingLicense   *driving_license.Snapshot
 	Snils            *string
 	Inn              *string
 	Photo            []byte
@@ -46,8 +46,8 @@ func NewSnapshot(
 	lastName string,
 	countryCode int64,
 	phoneNumber string,
-	passport *passport.PassportSnapshot,
-	drivingLicense *driving_license.DrivingLicenseSnapshot,
+	passport *passport.Snapshot,
+	drivingLicense *driving_license.Snapshot,
 	snils *string,
 	inn *string,
 	photo []byte,
@@ -138,7 +138,7 @@ func GetSnapshot(user *User, timestamp time.Time) (*Snapshot, error) {
 		int64(user.state),
 		user.isRemoved,
 		user.version,
-		timestamp.UTC().Unix())
+		timestamp.Unix())
 
 	return &snapshot, nil
 }
