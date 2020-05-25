@@ -28,7 +28,7 @@ type Snapshot struct {
 	Inn              *string
 	Photo            []byte
 	CardNumber       *string
-	CardExpired      *int64
+	CardExpires      *int64
 	RegistrationDate int64
 	RatingPositive   int64
 	RatingNegative   int64
@@ -52,7 +52,7 @@ func NewSnapshot(
 	inn *string,
 	photo []byte,
 	cardNumber *string,
-	cardExpired *int64,
+	cardExpires *int64,
 	registrationDate int64,
 	ratingPositive int64,
 	ratingNegative int64,
@@ -75,7 +75,7 @@ func NewSnapshot(
 		Inn:              inn,
 		Photo:            photo,
 		CardNumber:       cardNumber,
-		CardExpired:      cardExpired,
+		CardExpires:      cardExpires,
 		RegistrationDate: registrationDate,
 		RatingPositive:   ratingPositive,
 		RatingNegative:   ratingNegative,
@@ -109,12 +109,12 @@ func GetSnapshot(user *User, timestamp time.Time) (*Snapshot, error) {
 	}
 
 	var cardNumber *string
-	var cardExpired *int64
+	var cardExpires *int64
 	if user.card != nil {
 		tmpNum := user.card.GetNumber()
-		tmpExp := user.card.GetExpired().Unix()
+		tmpExp := user.card.GetExpires().Unix()
 		cardNumber = &tmpNum
-		cardExpired = &tmpExp
+		cardExpires = &tmpExp
 	}
 
 	snapshot := NewSnapshot(
@@ -130,7 +130,7 @@ func GetSnapshot(user *User, timestamp time.Time) (*Snapshot, error) {
 		inn,
 		user.photo,
 		cardNumber,
-		cardExpired,
+		cardExpires,
 		user.registrationDate.Unix(),
 		int64(user.rating.GetPositive()),
 		int64(user.rating.GetNegative()),
@@ -203,9 +203,9 @@ func LoadFromSnapshot(snapshot *Snapshot) (*User, error) {
 		}
 	}
 
-	if snapshot.CardNumber != nil && snapshot.CardExpired != nil {
-		expired := time.Unix(*snapshot.CardExpired, 0)
-		user.card, err = valuetypes.NewCard(*snapshot.CardNumber, expired)
+	if snapshot.CardNumber != nil && snapshot.CardExpires != nil {
+		expires := time.Unix(*snapshot.CardExpires, 0)
+		user.card, err = valuetypes.NewCard(*snapshot.CardNumber, expires)
 		if err != nil {
 			return nil, err
 		}

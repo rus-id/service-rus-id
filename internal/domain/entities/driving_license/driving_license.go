@@ -15,8 +15,8 @@ var (
 	ErrInvalidName       = errors.New("driving license name not specified")
 	ErrInvalidBirthday   = errors.New("driving license invalid birthday")
 	ErrInvalidIssue      = errors.New("driving license invalid issued")
-	ErrInvalidExpired    = errors.New("driving license invalid expired")
-	ErrInvalidDates      = errors.New("driving license expired date must be greater then issued date")
+	ErrInvalidExpires    = errors.New("driving license invalid expires")
+	ErrInvalidDates      = errors.New("driving license expires date must be greater then issued date")
 	ErrInvalidResidence  = errors.New("driving license residence not specified")
 	ErrInvalidValidation = errors.New("driving license validation not specified")
 )
@@ -27,7 +27,7 @@ type DrivingLicense struct {
 	name         commonTypes.Name
 	birthday     time.Time
 	issued       time.Time
-	expired      time.Time
+	expires      time.Time
 	residence    valuetypes.DrivingLicenseResidence
 	specialMarks string
 	validation   valuetypes.DrivingLicenseValidation
@@ -39,7 +39,7 @@ func NewDrivingLicense(
 	name *commonTypes.Name,
 	birthday *time.Time,
 	issued *time.Time,
-	expired *time.Time,
+	expires *time.Time,
 	residence *valuetypes.DrivingLicenseResidence,
 	specialMarks string,
 	validation *valuetypes.DrivingLicenseValidation) (*DrivingLicense, error) {
@@ -59,15 +59,15 @@ func NewDrivingLicense(
 		return nil, ErrInvalidBirthday
 	}
 
-	if expired == nil {
-		return nil, ErrInvalidExpired
+	if expires == nil {
+		return nil, ErrInvalidExpires
 	}
 
 	if issued == nil {
 		return nil, ErrInvalidIssue
 	}
 
-	if expired.Unix() <= issued.Unix() {
+	if expires.Unix() <= issued.Unix() {
 		return nil, ErrInvalidDates
 	}
 
@@ -85,7 +85,7 @@ func NewDrivingLicense(
 		name:         *name,
 		birthday:     *birthday,
 		issued:       *issued,
-		expired:      *expired,
+		expires:      *expires,
 		residence:    *residence,
 		specialMarks: specialMarks,
 		validation:   *validation,
@@ -126,12 +126,12 @@ func (d *DrivingLicense) ChangeIssued(issued *time.Time) {
 	d.issued = *issued
 }
 
-func (d *DrivingLicense) ChangeExpired(expired *time.Time) {
-	if expired == nil {
+func (d *DrivingLicense) ChangeExpires(expires *time.Time) {
+	if expires == nil {
 		return
 	}
 
-	d.expired = *expired
+	d.expires = *expires
 }
 
 func (d *DrivingLicense) ChangeResidence(residence *valuetypes.DrivingLicenseResidence) {
@@ -176,8 +176,8 @@ func (d *DrivingLicense) GetIssued() time.Time {
 	return d.issued
 }
 
-func (d *DrivingLicense) GetExpired() time.Time {
-	return d.expired
+func (d *DrivingLicense) GetExpires() time.Time {
+	return d.expires
 }
 
 func (d *DrivingLicense) GetResidence() valuetypes.DrivingLicenseResidence {
@@ -193,13 +193,13 @@ func (d *DrivingLicense) GetValidation() valuetypes.DrivingLicenseValidation {
 }
 
 func (d *DrivingLicense) String() string {
-	return fmt.Sprintf("ID: %v. Category %v. Name: %v. Birthday: %v. Issued: %v. Exppired: %v. Residence: %v. Special Marks: %v. Validation: %v",
+	return fmt.Sprintf("ID %v; category %v; name %v; birthday %v; issued %v; expires %v; residence %v; marks %v; %v",
 		d.id,
 		d.category,
 		d.name,
 		d.birthday.Format("02.01.2006"),
 		d.issued.Format("02.01.2006"),
-		d.expired.Format("02.01.2006"),
+		d.expires.Format("02.01.2006"),
 		d.residence,
 		d.specialMarks,
 		d.validation)

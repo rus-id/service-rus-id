@@ -97,7 +97,7 @@ func (t Tolerance) HasAccess(accessor Accessor) bool {
 }
 
 func (t *Tolerance) String() string {
-	text := "accessors: "
+	var text string
 	for idx, val := range t.accessors {
 		if idx == len(t.accessors)-1 {
 			text += val.String()

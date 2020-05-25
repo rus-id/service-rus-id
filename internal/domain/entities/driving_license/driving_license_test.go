@@ -17,7 +17,7 @@ var (
 	name, _      = commonTypes.NewName("Boris", nil, "Goldovsky")
 	birthday     = time.Date(1986, time.Month(4), 9, 1, 10, 30, 0, time.UTC)
 	issued       = time.Date(2010, time.Month(4), 9, 1, 10, 30, 0, time.UTC)
-	expired      = time.Date(2025, time.Month(4), 9, 1, 10, 30, 0, time.UTC)
+	expires      = time.Date(2025, time.Month(4), 9, 1, 10, 30, 0, time.UTC)
 	residence, _ = valuetypes.NewResidence("Russia")
 	specialMarks = "empty mark"
 	validation   = valuetypes.NewDrivingLicenseValidation(true, false)
@@ -30,7 +30,7 @@ func TestNewDrivingLicense_Success(t *testing.T) {
 		name,
 		&birthday,
 		&issued,
-		&expired,
+		&expires,
 		residence,
 		specialMarks,
 		validation)
@@ -51,7 +51,7 @@ func TestNewDrivingLicense_Errors(t *testing.T) {
 		name       *commonTypes.Name
 		birthday   *time.Time
 		issued     *time.Time
-		expired    *time.Time
+		expires    *time.Time
 		residence  *valuetypes.DrivingLicenseResidence
 		validation *valuetypes.DrivingLicenseValidation
 		err        error
@@ -62,7 +62,7 @@ func TestNewDrivingLicense_Errors(t *testing.T) {
 			name,
 			&birthday,
 			&issued,
-			&expired,
+			&expires,
 			residence,
 			validation,
 			nil,
@@ -73,7 +73,7 @@ func TestNewDrivingLicense_Errors(t *testing.T) {
 			name,
 			&birthday,
 			&issued,
-			&expired,
+			&expires,
 			residence,
 			validation,
 			ErrInvalidID,
@@ -84,7 +84,7 @@ func TestNewDrivingLicense_Errors(t *testing.T) {
 			name,
 			&birthday,
 			&issued,
-			&expired,
+			&expires,
 			residence,
 			validation,
 			ErrInvalidCategory,
@@ -95,7 +95,7 @@ func TestNewDrivingLicense_Errors(t *testing.T) {
 			nil,
 			&birthday,
 			&issued,
-			&expired,
+			&expires,
 			residence,
 			validation,
 			ErrInvalidName,
@@ -106,7 +106,7 @@ func TestNewDrivingLicense_Errors(t *testing.T) {
 			name,
 			nil,
 			&issued,
-			&expired,
+			&expires,
 			residence,
 			validation,
 			ErrInvalidBirthday,
@@ -117,7 +117,7 @@ func TestNewDrivingLicense_Errors(t *testing.T) {
 			name,
 			&birthday,
 			nil,
-			&expired,
+			&expires,
 			residence,
 			validation,
 			ErrInvalidIssue,
@@ -128,7 +128,7 @@ func TestNewDrivingLicense_Errors(t *testing.T) {
 			name,
 			&birthday,
 			&issued,
-			&expired,
+			&expires,
 			nil,
 			validation,
 			ErrInvalidResidence,
@@ -139,7 +139,7 @@ func TestNewDrivingLicense_Errors(t *testing.T) {
 			name,
 			&birthday,
 			&issued,
-			&expired,
+			&expires,
 			residence,
 			nil,
 			ErrInvalidValidation,
@@ -149,7 +149,7 @@ func TestNewDrivingLicense_Errors(t *testing.T) {
 			category,
 			name,
 			&birthday,
-			&expired,
+			&expires,
 			&issued,
 			residence,
 			validation,
@@ -164,7 +164,7 @@ func TestNewDrivingLicense_Errors(t *testing.T) {
 			val.name,
 			val.birthday,
 			val.issued,
-			val.expired,
+			val.expires,
 			val.residence,
 			specialMarks,
 			val.validation)
@@ -182,7 +182,7 @@ func TestDrivingLicense_Getters(t *testing.T) {
 		name,
 		&birthday,
 		&issued,
-		&expired,
+		&expires,
 		residence,
 		specialMarks,
 		validation)
@@ -207,8 +207,8 @@ func TestDrivingLicense_Getters(t *testing.T) {
 		t.Errorf("expected: %v, act: %v", &issued, act)
 	}
 
-	if act := dl.GetExpired(); act != expired {
-		t.Errorf("expected: %v, act: %v", &expired, act)
+	if act := dl.GetExpires(); act != expires {
+		t.Errorf("expected: %v, act: %v", &expires, act)
 	}
 
 	if act := dl.GetResidence(); act != *residence {
@@ -229,7 +229,7 @@ func TestDrivingLicense_Setters(t *testing.T) {
 	newName, _ := commonTypes.NewName("Edward", nil, "Kondratev")
 	newBirthday := time.Date(1988, time.Month(4), 9, 1, 10, 30, 0, time.UTC)
 	newIssued := time.Date(2020, time.Month(4), 9, 1, 10, 30, 0, time.UTC)
-	newExpired := time.Date(2027, time.Month(4), 9, 1, 10, 30, 0, time.UTC)
+	newExpires := time.Date(2027, time.Month(4), 9, 1, 10, 30, 0, time.UTC)
 	newResidence, _ := valuetypes.NewResidence("USA")
 	newSpecialMarks := "new special mark"
 	newValidation := valuetypes.NewDrivingLicenseValidation(false, true)
@@ -240,7 +240,7 @@ func TestDrivingLicense_Setters(t *testing.T) {
 		name,
 		&birthday,
 		&issued,
-		&expired,
+		&expires,
 		residence,
 		specialMarks,
 		validation)
@@ -265,9 +265,9 @@ func TestDrivingLicense_Setters(t *testing.T) {
 		t.Errorf("expected: %v, act: %v", &newIssued, act)
 	}
 
-	dl.ChangeExpired(&newExpired)
-	if act := dl.GetExpired(); act != newExpired {
-		t.Errorf("expected: %v, act: %v", &newExpired, act)
+	dl.ChangeExpires(&newExpires)
+	if act := dl.GetExpires(); act != newExpires {
+		t.Errorf("expected: %v, act: %v", &newExpires, act)
 	}
 
 	dl.ChangeResidence(newResidence)
@@ -283,5 +283,23 @@ func TestDrivingLicense_Setters(t *testing.T) {
 	dl.ChangeValidation(newValidation)
 	if act := dl.GetValidation(); act != *newValidation {
 		t.Errorf("expected: %v, act: %v", newValidation, act)
+	}
+}
+
+func TestDrivingLicense_String(t *testing.T) {
+	const exp = "ID: 77 77\t777777. Category A. Name: Boris Goldovsky. Birthday: 09.04.1986. Issued: 09.04.2010. Exppired: 09.04.2025. Residence: Russia. Special Marks: empty mark. Validation: GIBDD valid: true. Document valid: false"
+	dl, _ := NewDrivingLicense(
+		id,
+		category,
+		name,
+		&birthday,
+		&issued,
+		&expires,
+		residence,
+		specialMarks,
+		validation)
+
+	if act := dl.String(); act != exp {
+		t.Errorf("expected: %v, act: %v", exp, act)
 	}
 }

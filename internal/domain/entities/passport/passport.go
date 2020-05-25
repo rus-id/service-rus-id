@@ -137,7 +137,7 @@ func (p *Passport) GetValidation() valuetypes.PassportValidation {
 }
 
 func (p *Passport) String() string {
-	return fmt.Sprintf("ID: %v. Name: %v. Birthday: %v. Issued: %v. Registration: %v. Validation: %v",
+	return fmt.Sprintf("ID %v; name %v; birthday %v; issued %v; registration %v; %v",
 		p.id,
 		p.name,
 		p.birthday.Format("02.01.2006"),

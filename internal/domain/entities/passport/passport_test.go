@@ -208,3 +208,18 @@ func TestPassport_Setters(t *testing.T) {
 		t.Errorf("expected: %v, act: %v", newValidation, act)
 	}
 }
+
+func TestPassport_String(t *testing.T) {
+	const exp = "ID: 77 77\t777777. Name: Boris Goldovsky. Birthday: 09.04.1986. Issued: Issued by MVD, 09.04.2010, code 770-77. Registration: Russia, Moscow. Validation: UFMS valid: true. MVD valid: false. FSSP valid: true Document valid: false"
+	passport, _ := NewPassport(
+		id,
+		name,
+		&birthday,
+		issued,
+		registration,
+		validation)
+
+	if act := passport.String(); act != exp {
+		t.Errorf("expected: %v, act: %v", exp, act)
+	}
+}

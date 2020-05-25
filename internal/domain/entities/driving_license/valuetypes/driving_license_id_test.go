@@ -70,8 +70,8 @@ func TestDrivingLicenseID_String(t *testing.T) {
 		number   string
 		expected string
 	}{
-		{"0000", "000000", "00 00	000000"},
-		{"1234", "123456", "12 34	123456"},
+		{"0000", "000000", "00 00 000000"},
+		{"1234", "123456", "12 34 123456"},
 	}
 
 	for _, val := range data {

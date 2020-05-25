@@ -16,7 +16,7 @@ type DrivingLicenseSnapshot struct {
 	LastName           string
 	Birthday           int64
 	Issued             int64
-	Expired            int64
+	Expires            int64
 	Residence          string
 	SpecialMarks       string
 	GibddValidation    bool
@@ -32,7 +32,7 @@ func NewSnapshot(
 	lastName string,
 	birthday int64,
 	issued int64,
-	expired int64,
+	expires int64,
 	residence string,
 	specialMarks string,
 	gibddValidation bool,
@@ -47,7 +47,7 @@ func NewSnapshot(
 		LastName:           lastName,
 		Birthday:           birthday,
 		Issued:             issued,
-		Expired:            expired,
+		Expires:            expires,
 		Residence:          residence,
 		SpecialMarks:       specialMarks,
 		GibddValidation:    gibddValidation,
@@ -69,7 +69,7 @@ func GetSnapshot(drivingLicense *DrivingLicense) *DrivingLicenseSnapshot {
 		drivingLicense.GetName().GetLast(),
 		drivingLicense.GetBirthday().Unix(),
 		drivingLicense.GetIssued().Unix(),
-		drivingLicense.GetExpired().Unix(),
+		drivingLicense.GetExpires().Unix(),
 		drivingLicense.GetResidence().GetValue(),
 		drivingLicense.GetSpecialMarks(),
 		drivingLicense.GetValidation().GetGibdd(),
@@ -97,7 +97,7 @@ func LoadFromSnapshot(snapshot *DrivingLicenseSnapshot) (*DrivingLicense, error)
 	category := dlValueTypes.DrivingLicenseCategory(snapshot.Category)
 	birthday := time.Unix(snapshot.Birthday, 0)
 	issued := time.Unix(snapshot.Issued, 0)
-	expired := time.Unix(snapshot.Expired, 0)
+	expires := time.Unix(snapshot.Expires, 0)
 
 	residence, err := dlValueTypes.NewResidence(snapshot.Residence)
 	if err != nil {
@@ -112,7 +112,7 @@ func LoadFromSnapshot(snapshot *DrivingLicenseSnapshot) (*DrivingLicense, error)
 		name,
 		&birthday,
 		&issued,
-		&expired,
+		&expires,
 		residence,
 		snapshot.SpecialMarks,
 		validation)

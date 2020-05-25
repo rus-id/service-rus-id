@@ -76,7 +76,7 @@ func TestPassportIssue_Getters(t *testing.T) {
 
 func TestPassportIssue_String(t *testing.T) {
 	date := time.Date(2010, time.Month(4), 9, 1, 10, 30, 0, time.UTC)
-	const expected = "Issued by УФМС ХХХ, 09.04.2010, code 770-04"
+	const expected = "УФМС ХХХ 09.04.2010 code 770-04"
 
 	issue, _ := NewPassportIssue("УФМС ХХХ", date, "770-04")
 

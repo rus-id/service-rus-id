@@ -58,10 +58,10 @@ func (p PaymentSystem) String() string {
 type Card struct {
 	number  string
 	system  PaymentSystem
-	expired time.Time
+	expires time.Time
 }
 
-func NewCard(number string, expired time.Time) (*Card, error) {
+func NewCard(number string, expires time.Time) (*Card, error) {
 	paymentSystem, err := GetPaymentSystem(number)
 	if err != nil {
 		return nil, err
@@ -70,7 +70,7 @@ func NewCard(number string, expired time.Time) (*Card, error) {
 	return &Card{
 		number:  number,
 		system:  paymentSystem,
-		expired: expired,
+		expires: expires,
 	}, nil
 }
 
@@ -83,14 +83,14 @@ func (c Card) GetLastFour() string {
 	return string(runes[len(runes)-4:])
 }
 
-func (c Card) GetExpired() time.Time {
-	return c.expired
+func (c Card) GetExpires() time.Time {
+	return c.expires
 }
 
 func (c Card) IsExpired(now time.Time) bool {
-	return c.expired.Unix() < now.Unix()
+	return c.expires.Unix() < now.Unix()
 }
 
 func (c Card) String() string {
-	return fmt.Sprintf("%s %s. Expired %s", c.system, c.number, c.expired.Format("01/06"))
+	return fmt.Sprintf("%s %s %s", c.system, c.number, c.expires.Format("01/06"))
 }

@@ -41,8 +41,8 @@ func (pi PassportIssue) GetCode() string {
 	return pi.code
 }
 
-func (pi *PassportIssue) String() string {
-	return fmt.Sprintf("Issued by %s, %v, code %v",
+func (pi PassportIssue) String() string {
+	return fmt.Sprintf("%s %v code %v",
 		pi.organisation,
 		pi.date.Format("02.01.2006"),
 		pi.code)

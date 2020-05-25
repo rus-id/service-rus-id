@@ -10,7 +10,7 @@ import (
 type UserRepositoryPg struct {
 }
 
-func (r *UserRepositoryPg) FindOrCreate(id valuetypes.UserID) (*user.User, error) {
+func (r *UserRepositoryPg) Find(id valuetypes.UserID) (*user.User, error) {
 	return nil, errors.New("not implemented")
 }
 

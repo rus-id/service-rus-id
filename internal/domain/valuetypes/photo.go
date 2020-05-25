@@ -17,8 +17,8 @@ func NewPhoto(value []byte) (Photo, error) {
 
 func (s Photo) String() string {
 	if len(s) == 0 {
-		return "Photo not exist"
+		return "not uploaded"
 	}
 
-	return "Photo uploaded"
+	return "uploaded"
 }

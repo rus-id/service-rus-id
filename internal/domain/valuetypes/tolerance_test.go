@@ -197,8 +197,8 @@ func TestTolerance_String(t *testing.T) {
 		accessors []Accessor
 		exp       string
 	}{
-		{accessors, "accessors: contacts, profile, phone, passport, driver license"},
-		{[]Accessor{}, "accessors: "},
+		{accessors, "contacts, profile, phone, passport, driver license"},
+		{[]Accessor{}, ""},
 	}
 
 	for _, val := range data {

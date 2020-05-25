@@ -45,7 +45,7 @@ func TestPaymentSystem_String(t *testing.T) {
 }
 
 func TestNewCard(t *testing.T) {
-	expired := time.Date(2020, time.Month(4), 9, 1, 10, 30, 0, time.UTC)
+	expires := time.Date(2020, time.Month(4), 9, 1, 10, 30, 0, time.UTC)
 
 	data := []struct {
 		number string
@@ -60,7 +60,7 @@ func TestNewCard(t *testing.T) {
 	}
 
 	for _, val := range data {
-		card, err := NewCard(val.number, expired)
+		card, err := NewCard(val.number, expires)
 
 		if err != val.err {
 			t.Errorf("expected error: %v, actual: %v", val.err, err)
@@ -74,15 +74,15 @@ func TestNewCard(t *testing.T) {
 			t.Errorf("expected: %v, actual: %v", val.number, act)
 		}
 
-		if act := card.GetExpired(); act != expired {
-			t.Errorf("expected: %v, actual: %v", expired, act)
+		if act := card.GetExpires(); act != expires {
+			t.Errorf("expected: %v, actual: %v", expires, act)
 		}
 	}
 }
 
 func TestCard_IsExpired(t *testing.T) {
 	data := []struct {
-		expired   time.Time
+		expires   time.Time
 		now       time.Time
 		isExpired bool
 	}{
@@ -105,7 +105,7 @@ func TestCard_IsExpired(t *testing.T) {
 
 	number := "4444333322221111"
 	for _, val := range data {
-		card, _ := NewCard(number, val.expired)
+		card, _ := NewCard(number, val.expires)
 		if isExpired := card.IsExpired(val.now); isExpired != val.isExpired {
 			t.Errorf("expected: %v, actual: %v", val.isExpired, isExpired)
 		}
@@ -113,7 +113,7 @@ func TestCard_IsExpired(t *testing.T) {
 }
 
 func TestCard_Getters(t *testing.T) {
-	expired := time.Date(2020, time.Month(4), 9, 1, 10, 30, 0, time.UTC)
+	expires := time.Date(2020, time.Month(4), 9, 1, 10, 30, 0, time.UTC)
 	data := []struct {
 		number   string
 		lastFour string
@@ -125,8 +125,8 @@ func TestCard_Getters(t *testing.T) {
 	}
 
 	for _, val := range data {
-		card, _ := NewCard(val.number, expired)
-		expired := time.Date(2020, time.Month(4), 9, 1, 10, 30, 0, time.UTC)
+		card, _ := NewCard(val.number, expires)
+		expires := time.Date(2020, time.Month(4), 9, 1, 10, 30, 0, time.UTC)
 		if act := card.GetNumber(); act != val.number {
 			t.Errorf("expected: %v, actual: %v", val.number, act)
 		}
@@ -135,19 +135,19 @@ func TestCard_Getters(t *testing.T) {
 			t.Errorf("expected: %v, actual: %v", val.lastFour, act)
 		}
 
-		if act := card.GetExpired(); act != expired {
-			t.Errorf("expected: %v, actual: %v", expired, act)
+		if act := card.GetExpires(); act != expires {
+			t.Errorf("expected: %v, actual: %v", expires, act)
 		}
 	}
 }
 
 func TestCard_String(t *testing.T) {
-	expired := time.Date(2020, time.Month(4), 9, 1, 10, 30, 0, time.UTC)
-	card, _ := NewCard("4444333322221111", expired)
+	expires := time.Date(2020, time.Month(4), 9, 1, 10, 30, 0, time.UTC)
+	card, _ := NewCard("4444333322221111", expires)
 
-	expected := "VISA 4444333322221111. Expired 04/20"
+	expected := "VISA 4444333322221111 04/20"
 
 	if act := card.String(); act != expected {
-		t.Errorf("expected: %q, actual: %q", expired, act)
+		t.Errorf("expected: %q, actual: %q", expires, act)
 	}
 }

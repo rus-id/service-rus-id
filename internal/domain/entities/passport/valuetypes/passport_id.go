@@ -42,7 +42,7 @@ func (id PassportID) GetNumber() string {
 func (id PassportID) String() string {
 	serialRunes := []rune(id.serial)
 
-	return fmt.Sprintf("%v %v\t%v",
+	return fmt.Sprintf("%v %v %v",
 		string(serialRunes[0:2]),
 		string(serialRunes[2:4]),
 		id.number)

@@ -50,5 +50,5 @@ func (r Rating) GetTotal() int {
 }
 
 func (r Rating) String() string {
-	return fmt.Sprintf("Total %d. Positive %d. Negative %d", r.GetTotal(), r.positive, r.negative)
+	return fmt.Sprintf("positive %d; negative %d; total %d;", r.positive, r.negative, r.GetTotal())
 }

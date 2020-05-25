@@ -36,8 +36,8 @@ func TestPhoto_String(t *testing.T) {
 		photo Photo
 		exp   string
 	}{
-		{[]byte{10, 20, 30, 40, 50}, "Photo uploaded"},
-		{[]byte{}, "Photo not exist"},
+		{[]byte{10, 20, 30, 40, 50}, "uploaded"},
+		{[]byte{}, "not uploaded"},
 	}
 
 	for _, val := range data {

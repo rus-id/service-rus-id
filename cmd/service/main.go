@@ -10,11 +10,11 @@ import (
 	"github.com/bgoldovsky/service-rus-id/internal/domain/user"
 	"github.com/bgoldovsky/service-rus-id/internal/domain/valuetypes"
 	"github.com/bgoldovsky/service-rus-id/internal/logger"
-	"github.com/sirupsen/logrus"
+	"github.com/bgoldovsky/service-rus-id/internal/repository/in_memory"
 )
 
+// TODO: Почистить помойку
 func main() {
-
 	userID := valuetypes.CreateUserID()
 	name, err := valuetypes.NewName("Boris", nil, "Goldovsky")
 	if err != nil {
@@ -49,7 +49,7 @@ func main() {
 	if err != nil {
 		logError("user", u, err)
 	}
-	u.Activate()
+	//u.Activate()
 
 	snils, err := valuetypes.NewSnils("59650418527")
 	if err != nil {
@@ -70,22 +70,37 @@ func main() {
 	u.ChangeDrivingLicense(dl)
 	u.GrantFullAccess(*valuetypes.CreateUserID())
 
-	expired := time.Date(2020, time.Month(4), 9, 1, 10, 30, 0, time.UTC)
-	card, err := valuetypes.NewCard("4444333322221111", expired)
+	expires := time.Date(2020, time.Month(4), 9, 1, 10, 30, 0, time.UTC)
+	card, err := valuetypes.NewCard("4444333322221111", expires)
 	u.ChangeCard(card)
 
 	photo := valuetypes.Photo{1, 2, 3}
 	u.ChangePhoto(&photo)
 
-	text := u.String()
-	logger.Log.Info(text)
-
-	snapshot, err := user.GetSnapshot(u, time.Now().UTC())
+	store := make(map[valuetypes.UserID]*user.Snapshot)
+	repo, err := in_memory.NewInMemoryRepository(store)
 	if err != nil {
-		logError("snapshot", snapshot, err)
+		logError("user", u, err)
 	}
 
-	logger.Log.WithFields(logrus.Fields{"Snapshot": snapshot}).Warn("snapshot retrieved")
+	err = repo.Save(u)
+	if err != nil {
+		logError("user", u, err)
+	}
+
+	isExist, err := repo.IsExist(u.GetID())
+	if err != nil {
+		logError("user", u, err)
+	}
+
+	logger.Log.Infof("User exist %v", isExist)
+
+	loaded, err := repo.Find(u.GetID())
+	if err != nil {
+		logError("id", u.GetID(), err)
+	}
+
+	logger.Log.Info(loaded.String())
 }
 
 func logError(key string, val interface{}, err error) {
@@ -144,7 +159,7 @@ func getDrivingLicense() *driving_license.DrivingLicense {
 	category := dlValueTypes.DrivingLicenseA
 	birthday := time.Date(1986, time.Month(4), 9, 1, 10, 30, 0, time.UTC)
 	issued := time.Date(2010, time.Month(4), 9, 1, 10, 30, 0, time.UTC)
-	expired := time.Date(2025, time.Month(4), 9, 1, 10, 30, 0, time.UTC)
+	expires := time.Date(2025, time.Month(4), 9, 1, 10, 30, 0, time.UTC)
 	specialMarks := "empty mark"
 	validation := dlValueTypes.NewDrivingLicenseValidation(true, false)
 
@@ -154,7 +169,7 @@ func getDrivingLicense() *driving_license.DrivingLicense {
 		name,
 		&birthday,
 		&issued,
-		&expired,
+		&expires,
 		residence,
 		specialMarks,
 		validation)

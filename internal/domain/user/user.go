@@ -331,10 +331,10 @@ func (u *User) Remove() {
 func (u *User) String() string {
 	var tolerances string
 	for key, val := range u.tolerances {
-		tolerances += fmt.Sprintf("ID: %v Accessors: %v. ", key, val.String())
+		tolerances += fmt.Sprintf("ID %v %v; ", key, val.String())
 	}
 
-	return fmt.Sprintf("User Aggregate\nID: %v\nName: %v\nPhone: %v\nPassport %v\nDriving License: %v\nSNILS: %v\nINN: %v\nPhoto: %v\nCard: %v\nRegistration Date: %v\nRating: %v\nTolerances: %v\nState: %v\nIs Removed: %v\nVersion: %v\n",
+	return fmt.Sprintf("User Aggregate ID %v\nName: %v\nPhone: %v\nPassport: %v\nDriving License: %v\nSNILS: %v\nINN: %v\nPhoto: %v\nCard: %v\nRegistration Date: %v\nRating: %v\nTolerances: %v\nState: %v\nRemoved: %v\nVersion: %v\n",
 		u.id,
 		u.name,
 		u.phone,
@@ -344,7 +344,7 @@ func (u *User) String() string {
 		u.inn,
 		u.photo,
 		u.card,
-		u.registrationDate.Format("02.01.2006"),
+		u.registrationDate.Format("02.01.2006 15:04:05"),
 		u.rating,
 		tolerances,
 		u.state,
