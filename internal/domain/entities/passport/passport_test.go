@@ -11,18 +11,6 @@ import (
 	commonTypes "github.com/bgoldovsky/service-rus-id/internal/domain/valuetypes"
 )
 
-var (
-	id, _     = valuetypes.NewPassportID("7777", "777777")
-	name, _   = commonTypes.NewName("Boris", nil, "Goldovsky")
-	birthday  = time.Date(1986, time.Month(4), 9, 1, 10, 30, 0, time.UTC)
-	issued, _ = valuetypes.NewPassportIssue(
-		"MVD",
-		time.Date(2010, time.Month(4), 9, 1, 10, 30, 0, time.UTC),
-		"770-77")
-	registration, _ = commonTypes.NewAddress("Russia, Moscow")
-	validation      = valuetypes.NewPassportValidation(true, false, true, false)
-)
-
 func TestNewPassport_Success(t *testing.T) {
 	passport, err := NewPassport(
 		id,
