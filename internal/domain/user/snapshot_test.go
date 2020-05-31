@@ -138,14 +138,6 @@ func TestLoadFromSnapshot_Success(t *testing.T) {
 	expectedUser.ChangeCard(userCard)
 	expectedUser.Activate()
 
-	for i := 0; i < userPositiveRating; i++ {
-		expectedUser.IncreaseRating()
-	}
-
-	for i := 0; i < userNegativeRating; i++ {
-		expectedUser.DecreaseRating()
-	}
-
 	for _, val := range userAccessors {
 		expectedUser.GrantAccess(*userOtherID, val)
 	}
@@ -190,8 +182,8 @@ func TestLoadFromSnapshot_Success(t *testing.T) {
 
 func TestLoadFromSnapshot_Nil(t *testing.T) {
 	act, err := LoadFromSnapshot(nil)
-	if err != nil {
-		t.Errorf("expected not error, act %v", err)
+	if err != ErrInvalidSnapshot {
+		t.Errorf("expected error: %v, act %v", ErrInvalidSnapshot, err)
 	}
 
 	if act != nil {
@@ -219,14 +211,6 @@ func TestGetSnapshot_Success(t *testing.T) {
 	user.ChangePhoto(&userPhoto)
 	user.ChangeCard(userCard)
 	user.Activate()
-
-	for i := 0; i < userPositiveRating; i++ {
-		user.IncreaseRating()
-	}
-
-	for i := 0; i < userNegativeRating; i++ {
-		user.DecreaseRating()
-	}
 
 	for _, val := range userAccessors {
 		user.GrantAccess(*userOtherID, val)

@@ -96,6 +96,25 @@ func (t Tolerance) HasAccess(accessor Accessor) bool {
 	return false
 }
 
+func (t *Tolerance) GetAccessors() []Accessor {
+	if len(t.accessors) == 0 {
+		return nil
+	}
+
+	accessors := make([]Accessor, len(t.accessors))
+	copy(accessors, t.accessors)
+
+	return accessors
+}
+
+func (t *Tolerance) AnyAccessors() bool {
+	if len(t.accessors) == 0 {
+		return false
+	}
+
+	return true
+}
+
 func (t *Tolerance) String() string {
 	var text string
 	for idx, val := range t.accessors {
@@ -108,15 +127,4 @@ func (t *Tolerance) String() string {
 	}
 
 	return text
-}
-
-func (t *Tolerance) GetAccessors() []Accessor {
-	if len(t.accessors) == 0 {
-		return nil
-	}
-
-	accessors := make([]Accessor, len(t.accessors))
-	copy(accessors, t.accessors)
-
-	return accessors
 }

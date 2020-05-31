@@ -49,7 +49,6 @@ func main() {
 	if err != nil {
 		logError("user", u, err)
 	}
-	//u.Activate()
 
 	snils, err := valuetypes.NewSnils("59650418527")
 	if err != nil {

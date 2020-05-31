@@ -15,9 +15,9 @@ var (
 	ErrInvalidID               = errors.New("user aggregate invalid ID")
 	ErrInvalidName             = errors.New("user aggregate invalid name")
 	ErrInvalidPhone            = errors.New("user aggregate invalid phone")
+	ErrInvalidRegistrationDate = errors.New("user aggregate invalid registration date")
 	ErrInvalidRating           = errors.New("user aggregate invalid rating")
 	ErrInvalidState            = errors.New("user aggregate invalid state")
-	ErrInvalidRegistrationDate = errors.New("user aggregate invalid registration date")
 )
 
 type Aggregate interface {
@@ -44,6 +44,8 @@ type Aggregate interface {
 	Block()
 	Activate()
 	Remove()
+
+	fmt.Stringer
 }
 
 type User struct {
@@ -246,11 +248,11 @@ func (u *User) ChangeCard(card *valuetypes.Card) {
 }
 
 func (u *User) IncreaseRating() {
-	u.rating.AddPositive()
+	u.rating = u.rating.AddPositive()
 }
 
 func (u *User) DecreaseRating() {
-	u.rating.AddNegative()
+	u.rating = u.rating.AddNegative()
 }
 
 func (u *User) GrantAccess(userID valuetypes.UserID, accessor valuetypes.Accessor) {
@@ -276,7 +278,12 @@ func (u *User) RevokeAccess(userID valuetypes.UserID, accessor valuetypes.Access
 	}
 
 	tolerance = tolerance.RemoveAccess(accessor)
-	u.tolerances[userID] = tolerance
+	if tolerance.AnyAccessors() {
+		u.tolerances[userID] = tolerance
+		return
+	}
+
+	delete(u.tolerances, userID)
 }
 
 func (u *User) GrantFullAccess(userID valuetypes.UserID) {

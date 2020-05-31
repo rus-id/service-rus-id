@@ -163,7 +163,8 @@ var (
 		commonTypes.AccessorPhone,
 		commonTypes.AccessorPassport,
 		commonTypes.AccessorDriverLicense}
-	userTolerance, _       = commonTypes.NewTolerance(userOtherID, userAccessors)
-	userTolerances         = map[commonTypes.UserID]commonTypes.Tolerance{*userOtherID: *userTolerance}
-	userToleranceSnapshots = user.GetToleranceSnapshot(*userID, userTolerances)
+	userTolerance, _            = commonTypes.NewTolerance(userOtherID, userAccessors)
+	userTolerances              = map[commonTypes.UserID]commonTypes.Tolerance{*userOtherID: *userTolerance}
+	userToleranceSnapshots      = user.GetToleranceSnapshot(*userID, userTolerances)
+	userToleranceEmptySnapshots = user.GetToleranceSnapshot(*userID, make(map[commonTypes.UserID]commonTypes.Tolerance))
 )

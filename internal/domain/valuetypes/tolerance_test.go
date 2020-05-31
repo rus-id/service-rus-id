@@ -184,6 +184,26 @@ func TestTolerance_Idempotent(t *testing.T) {
 	}
 }
 
+func TestTolerance_AnyAccessors(t *testing.T) {
+	userID, _ := NewUserID("059b4e12-6983-4806-bd5a-cc3433e78f66")
+	accessors := []Accessor{AccessorContacts}
+
+	data := []struct {
+		accessors []Accessor
+		exp       bool
+	}{
+		{accessors, true},
+		{[]Accessor{}, false},
+	}
+
+	for _, val := range data {
+		tolerance, _ := NewTolerance(userID, val.accessors)
+		if act := tolerance.AnyAccessors(); act != val.exp {
+			t.Errorf("expexted %v, act %v", val.exp, act)
+		}
+	}
+}
+
 func TestTolerance_String(t *testing.T) {
 	userID, _ := NewUserID("059b4e12-6983-4806-bd5a-cc3433e78f66")
 	accessors := []Accessor{
@@ -207,5 +227,4 @@ func TestTolerance_String(t *testing.T) {
 			t.Errorf("expexted %q, act %q", val.exp, act)
 		}
 	}
-
 }
