@@ -16,7 +16,7 @@ var (
 )
 
 type Snapshot struct {
-	UserID           uuid.UUID
+	UserID           string
 	FirstName        string
 	MiddleName       *string
 	LastName         string
@@ -40,7 +40,7 @@ type Snapshot struct {
 }
 
 func NewSnapshot(
-	userID uuid.UUID,
+	userID string,
 	firstName string,
 	middleName *string,
 	lastName string,
@@ -118,7 +118,7 @@ func GetSnapshot(user *User, timestamp time.Time) (*Snapshot, error) {
 	}
 
 	snapshot := NewSnapshot(
-		uuid.UUID(user.id),
+		user.id.String(),
 		user.name.GetFirst(),
 		user.name.GetMiddle(),
 		user.name.GetLast(),
@@ -148,7 +148,11 @@ func LoadFromSnapshot(snapshot *Snapshot) (*User, error) {
 		return nil, ErrInvalidSnapshot
 	}
 
-	id := valuetypes.UserID(snapshot.UserID)
+	id, err := valuetypes.NewUserID(snapshot.UserID)
+	if err != nil {
+		return nil, err
+	}
+
 	name, err := valuetypes.NewName(snapshot.FirstName, snapshot.MiddleName, snapshot.LastName)
 	if err != nil {
 		return nil, err
@@ -167,7 +171,7 @@ func LoadFromSnapshot(snapshot *Snapshot) (*User, error) {
 	registrationDate := time.Unix(snapshot.RegistrationDate, 0).UTC()
 	state := valuetypes.UserState(snapshot.State)
 
-	user, err := NewUser(&id, name, phone, &registrationDate, rating, state, snapshot.IsRemoved, snapshot.Version)
+	user, err := NewUser(id, name, phone, &registrationDate, rating, state, snapshot.IsRemoved, snapshot.Version)
 	if err != nil {
 		return nil, err
 	}

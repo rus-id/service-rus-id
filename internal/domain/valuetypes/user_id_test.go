@@ -41,3 +41,12 @@ func TestCreateNewUserID(t *testing.T) {
 		t.Errorf("empty identity: %v", act)
 	}
 }
+
+func TestUserID_String(t *testing.T) {
+	const expected = "059b4e12-6983-4806-bd5a-cc3433e78f66"
+	act, _ := NewUserID(expected)
+
+	if act.String() != expected {
+		t.Errorf("expected: %v, act: %v", expected, act)
+	}
+}

@@ -22,3 +22,7 @@ func NewUserID(value string) (*UserID, error) {
 	userID := UserID(id)
 	return &userID, nil
 }
+
+func (u UserID) String() string {
+	return uuid.UUID(u).String()
+}
