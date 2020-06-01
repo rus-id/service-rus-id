@@ -12,6 +12,11 @@ services:
     volumes:
       - database_data:/var/lib/postgresql/data
 
+  cache:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+
   service-rus-id:
     image: service-rus-id
     build:
@@ -24,3 +29,4 @@ services:
       - CONNECTION_STRING=host=db port=5432 user=postgres password=postgres dbname=service-rus-id sslmode=disable
     depends_on:
       - db
+      - cache
