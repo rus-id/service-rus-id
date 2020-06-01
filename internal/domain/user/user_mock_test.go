@@ -3,12 +3,11 @@ package user_test
 import (
 	"time"
 
-	"github.com/bgoldovsky/service-rus-id/internal/domain/user"
-
 	"github.com/bgoldovsky/service-rus-id/internal/domain/entities/driving_license"
 	dlValues "github.com/bgoldovsky/service-rus-id/internal/domain/entities/driving_license/valuetypes"
 	"github.com/bgoldovsky/service-rus-id/internal/domain/entities/passport"
 	passportTypes "github.com/bgoldovsky/service-rus-id/internal/domain/entities/passport/valuetypes"
+	"github.com/bgoldovsky/service-rus-id/internal/domain/user"
 	commonTypes "github.com/bgoldovsky/service-rus-id/internal/domain/valuetypes"
 )
 

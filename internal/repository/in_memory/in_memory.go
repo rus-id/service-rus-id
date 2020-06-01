@@ -10,7 +10,10 @@ import (
 	"github.com/bgoldovsky/service-rus-id/internal/repository"
 )
 
-var ErrInvalidStore = errors.New("in memory store not specified")
+var (
+	ErrInvalidStore     = errors.New("in memory store not specified")
+	ErrInvalidAggregate = errors.New("invalid aggregate")
+)
 
 type InMemoryRepository struct {
 	store map[valuetypes.UserID]*user.Snapshot
@@ -32,18 +35,28 @@ func (r *InMemoryRepository) Find(id valuetypes.UserID) (*user.User, error) {
 	defer r.ma.RUnlock()
 
 	val, ok := r.store[id]
-	if !ok {
+	if !ok || val.IsRemoved {
 		return nil, repository.ErrNotFound
 	}
 
 	return user.LoadFromSnapshot(val)
 }
 
-func (r *InMemoryRepository) Save(u *user.User) error {
+func (r *InMemoryRepository) Save(u user.Aggregate) error {
+	if u == nil {
+		return ErrInvalidAggregate
+	}
+
+	if _, ok := u.(*user.Nil); ok {
+		return nil
+	}
+
+	userAggregate := u.(*user.User)
+
 	r.ma.Lock()
 	defer r.ma.Unlock()
 
-	snapshot, err := user.GetSnapshot(u, time.Now())
+	snapshot, err := user.GetSnapshot(userAggregate, time.Now())
 	if err != nil {
 		return err
 	}
@@ -55,7 +68,7 @@ func (r *InMemoryRepository) IsExist(id valuetypes.UserID) (bool, error) {
 	r.ma.RLock()
 	defer r.ma.RUnlock()
 
-	_, ok := r.store[id]
+	val, ok := r.store[id]
 
-	return ok, nil
+	return ok && !val.IsRemoved, nil
 }
