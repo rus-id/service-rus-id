@@ -1,0 +1,26 @@
+version: "3.5"
+
+volumes:
+  database_data:
+    driver: local
+
+services:
+  db:
+    image: postgres:latest
+    ports:
+      - "5433:5432"
+    volumes:
+      - database_data:/var/lib/postgresql/data
+
+  service-rus-id:
+    image: service-rus-id
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "50051:50051"
+    environment:
+      - PORT=5005
+      - CONNECTION_STRING=host=db port=5432 user=postgres password=postgres dbname=service-rus-id sslmode=disable
+    depends_on:
+      - db
