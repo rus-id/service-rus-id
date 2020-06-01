@@ -3,20 +3,22 @@ package user_test
 import (
 	"testing"
 
+	"github.com/bgoldovsky/service-rus-id/internal/domain/mock"
+
 	"github.com/bgoldovsky/service-rus-id/internal/domain/valuetypes"
 
 	. "github.com/bgoldovsky/service-rus-id/internal/domain/user"
 )
 
 func TestNewUserNil(t *testing.T) {
-	user, err := NewUserNil(userID)
+	user, err := NewUserNil(mock.UserID)
 
 	if err != nil {
 		t.Errorf("expected: %v, act: %v", nil, err)
 	}
 
-	if id := user.GetID(); id != *userID {
-		t.Errorf("expected: %v, act: %v", *userID, id)
+	if id := user.GetID(); id != *mock.UserID {
+		t.Errorf("expected: %v, act: %v", *mock.UserID, id)
 	}
 
 	if act := user.IsRemoved(); !act {
@@ -37,43 +39,43 @@ func TestNewUserNil_Error(t *testing.T) {
 }
 
 func TestUserNil_Methods(t *testing.T) {
-	user, err := NewUserNil(userID)
+	user, err := NewUserNil(mock.UserID)
 
 	if err != nil {
 		t.Errorf("expected: %v, act: %v", nil, err)
 	}
 
-	if id := user.GetID(); id != *userID {
-		t.Errorf("expected: %v, act: %v", *userID, id)
+	if id := user.GetID(); id != *mock.UserID {
+		t.Errorf("expected: %v, act: %v", *mock.UserID, id)
 	}
 
-	user.ChangeName(userName)
-	user.ChangePhone(userPhone)
-	user.ChangePassport(passportEntity)
-	user.ChangeDrivingLicense(drivingLicenseEntity)
-	user.ChangeSnils(userSnils)
-	user.ChangeInn(userInn)
-	user.ChangePhoto(&userPhoto)
-	user.ChangeCard(userCard)
+	user.ChangeName(mock.UserName)
+	user.ChangePhone(mock.UserPhone)
+	user.ChangePassport(mock.PassportEntity)
+	user.ChangeDrivingLicense(mock.DrivingLicenseEntity)
+	user.ChangeSnils(mock.UserSnils)
+	user.ChangeInn(mock.UserInn)
+	user.ChangePhoto(&mock.UserPhoto)
+	user.ChangeCard(mock.UserCard)
 	user.IncreaseRating()
 	user.DecreaseRating()
-	user.GrantAccess(*userOtherID, valuetypes.AccessorContacts)
-	user.RevokeAccess(*userOtherID, valuetypes.AccessorContacts)
-	user.GrantFullAccess(*userOtherID)
-	user.RevokeFullAccess(*userOtherID)
+	user.GrantAccess(*mock.UserOtherID, valuetypes.AccessorContacts)
+	user.RevokeAccess(*mock.UserOtherID, valuetypes.AccessorContacts)
+	user.GrantFullAccess(*mock.UserOtherID)
+	user.RevokeFullAccess(*mock.UserOtherID)
 	user.Block()
 	user.Activate()
 	user.Remove()
 
-	if id := user.GetID(); id != *userID {
-		t.Errorf("expected: %v, act: %v", *userID, id)
+	if id := user.GetID(); id != *mock.UserID {
+		t.Errorf("expected: %v, act: %v", *mock.UserID, id)
 	}
 }
 
 func TestUserNil_String(t *testing.T) {
 	expected := "User Aggregate ID 059b4e12-6983-4806-bd5a-cc3433e78f66\nRemoved: true\n"
 
-	user, _ := NewUserNil(userID)
+	user, _ := NewUserNil(mock.UserID)
 
 	if act := user.String(); act != expected {
 		t.Errorf("expected: %v, act: %v", expected, act)

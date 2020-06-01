@@ -11,7 +11,8 @@ import (
 )
 
 var (
-	ErrInvalidStore     = errors.New("in memory store not specified")
+	ErrInvalidStore     = errors.New("in memory storage not specified")
+	ErrInvalidMutex     = errors.New("mutex not specified")
 	ErrInvalidAggregate = errors.New("invalid aggregate")
 )
 
@@ -20,9 +21,13 @@ type InMemoryRepository struct {
 	ma    sync.RWMutex
 }
 
-func NewInMemoryRepository(store map[valuetypes.UserID]*user.Snapshot) (*InMemoryRepository, error) {
+func NewInMemoryRepository(store map[valuetypes.UserID]*user.Snapshot, ma *sync.RWMutex) (*InMemoryRepository, error) {
 	if store == nil {
 		return nil, ErrInvalidStore
+	}
+
+	if ma == nil {
+		return nil, ErrInvalidMutex
 	}
 
 	return &InMemoryRepository{

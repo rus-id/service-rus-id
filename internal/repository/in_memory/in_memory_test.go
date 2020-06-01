@@ -2,20 +2,21 @@ package in_memory_test
 
 import (
 	"reflect"
+	"sync"
 	"testing"
 
-	"github.com/bgoldovsky/service-rus-id/internal/repository"
-
+	"github.com/bgoldovsky/service-rus-id/internal/domain/mock"
 	"github.com/bgoldovsky/service-rus-id/internal/domain/user"
 	"github.com/bgoldovsky/service-rus-id/internal/domain/valuetypes"
+	"github.com/bgoldovsky/service-rus-id/internal/repository"
 	. "github.com/bgoldovsky/service-rus-id/internal/repository/in_memory"
-	"github.com/bgoldovsky/service-rus-id/internal/repository/mock"
 )
 
 func TestNewInMemoryRepository_Success(t *testing.T) {
 	store := make(map[valuetypes.UserID]*user.Snapshot)
+	ma := &sync.RWMutex{}
 
-	repo, err := NewInMemoryRepository(store)
+	repo, err := NewInMemoryRepository(store, ma)
 
 	if repo == nil {
 		t.Errorf("expected: repo, act: %v", nil)
@@ -27,21 +28,33 @@ func TestNewInMemoryRepository_Success(t *testing.T) {
 }
 
 func TestNewInMemoryRepository_Err(t *testing.T) {
-	repo, err := NewInMemoryRepository(nil)
+	store := make(map[valuetypes.UserID]*user.Snapshot)
+	ma := &sync.RWMutex{}
 
+	repo, err := NewInMemoryRepository(nil, ma)
 	if repo != nil {
 		t.Errorf("expected: %v, act: %v", nil, repo)
 	}
 
 	if err != ErrInvalidStore {
-		t.Errorf("expected: %v, act: %v", ErrInvalidStore, repo)
+		t.Errorf("expected: %v, act: %v", ErrInvalidStore, err)
+	}
+
+	repo, err = NewInMemoryRepository(store, nil)
+	if repo != nil {
+		t.Errorf("expected: %v, act: %v", nil, repo)
+	}
+
+	if err != ErrInvalidMutex {
+		t.Errorf("expected: %v, act: %v", ErrInvalidMutex, err)
 	}
 }
 
 func TestInMemoryRepository_Save_Success(t *testing.T) {
 	store := make(map[valuetypes.UserID]*user.Snapshot)
+	ma := &sync.RWMutex{}
 
-	repo, _ := NewInMemoryRepository(store)
+	repo, _ := NewInMemoryRepository(store, ma)
 
 	userAggregate := mock.UserAggregate
 
@@ -53,8 +66,9 @@ func TestInMemoryRepository_Save_Success(t *testing.T) {
 
 func TestInMemoryRepository_Save_Nil(t *testing.T) {
 	store := make(map[valuetypes.UserID]*user.Snapshot)
+	ma := &sync.RWMutex{}
 
-	repo, _ := NewInMemoryRepository(store)
+	repo, _ := NewInMemoryRepository(store, ma)
 
 	err := repo.Save(nil)
 	if err != ErrInvalidAggregate {
@@ -64,8 +78,9 @@ func TestInMemoryRepository_Save_Nil(t *testing.T) {
 
 func TestInMemoryRepository_Save_NilAggregate(t *testing.T) {
 	store := make(map[valuetypes.UserID]*user.Snapshot)
+	ma := &sync.RWMutex{}
 
-	repo, _ := NewInMemoryRepository(store)
+	repo, _ := NewInMemoryRepository(store, ma)
 
 	userAggregate := mock.UserNilAggregate
 
@@ -77,8 +92,9 @@ func TestInMemoryRepository_Save_NilAggregate(t *testing.T) {
 
 func TestInMemoryRepository_IsExist_Success(t *testing.T) {
 	store := make(map[valuetypes.UserID]*user.Snapshot)
+	ma := &sync.RWMutex{}
 
-	repo, _ := NewInMemoryRepository(store)
+	repo, _ := NewInMemoryRepository(store, ma)
 
 	userAggregate := mock.UserAggregate
 
@@ -99,8 +115,9 @@ func TestInMemoryRepository_IsExist_Success(t *testing.T) {
 
 func TestInMemoryRepository_IsExist_Removed(t *testing.T) {
 	store := make(map[valuetypes.UserID]*user.Snapshot)
+	ma := &sync.RWMutex{}
 
-	repo, _ := NewInMemoryRepository(store)
+	repo, _ := NewInMemoryRepository(store, ma)
 
 	userAggregate := mock.UserAggregate
 	userAggregate.Remove()
@@ -122,8 +139,9 @@ func TestInMemoryRepository_IsExist_Removed(t *testing.T) {
 
 func TestInMemoryRepository_IsExist_NotExist(t *testing.T) {
 	store := make(map[valuetypes.UserID]*user.Snapshot)
+	ma := &sync.RWMutex{}
 
-	repo, _ := NewInMemoryRepository(store)
+	repo, _ := NewInMemoryRepository(store, ma)
 
 	userAggregate := mock.UserAggregate
 	ok, err := repo.IsExist(userAggregate.GetID())
@@ -138,8 +156,9 @@ func TestInMemoryRepository_IsExist_NotExist(t *testing.T) {
 
 func TestInMemoryRepository_Find_Success(t *testing.T) {
 	store := make(map[valuetypes.UserID]*user.Snapshot)
+	ma := &sync.RWMutex{}
 
-	repo, _ := NewInMemoryRepository(store)
+	repo, _ := NewInMemoryRepository(store, ma)
 
 	userAggregate := mock.UserAggregate
 
@@ -160,8 +179,9 @@ func TestInMemoryRepository_Find_Success(t *testing.T) {
 
 func TestInMemoryRepository_Find_Removed(t *testing.T) {
 	store := make(map[valuetypes.UserID]*user.Snapshot)
+	ma := &sync.RWMutex{}
 
-	repo, _ := NewInMemoryRepository(store)
+	repo, _ := NewInMemoryRepository(store, ma)
 
 	userAggregate := mock.UserAggregate
 	userAggregate.Remove()
@@ -183,8 +203,9 @@ func TestInMemoryRepository_Find_Removed(t *testing.T) {
 
 func TestInMemoryRepository_Find_NotExist(t *testing.T) {
 	store := make(map[valuetypes.UserID]*user.Snapshot)
+	ma := &sync.RWMutex{}
 
-	repo, _ := NewInMemoryRepository(store)
+	repo, _ := NewInMemoryRepository(store, ma)
 
 	userAggregate := mock.UserAggregate
 	restored, err := repo.Find(userAggregate.GetID())

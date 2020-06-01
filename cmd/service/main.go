@@ -1,6 +1,7 @@
 package main
 
 import (
+	"sync"
 	"time"
 
 	"github.com/bgoldovsky/service-rus-id/internal/domain/entities/driving_license"
@@ -10,7 +11,8 @@ import (
 	"github.com/bgoldovsky/service-rus-id/internal/domain/user"
 	"github.com/bgoldovsky/service-rus-id/internal/domain/valuetypes"
 	"github.com/bgoldovsky/service-rus-id/internal/logger"
-	"github.com/bgoldovsky/service-rus-id/internal/repository/in_memory"
+	repo "github.com/bgoldovsky/service-rus-id/internal/repository/in_memory"
+	storage "github.com/bgoldovsky/service-rus-id/internal/storage/in_memory"
 )
 
 // TODO: Почистить помойку
@@ -77,9 +79,16 @@ func main() {
 	u.ChangePhoto(&photo)
 
 	store := make(map[valuetypes.UserID]*user.Snapshot)
-	repo, err := in_memory.NewInMemoryRepository(store)
+	ma := &sync.RWMutex{}
+
+	repo, err := repo.NewInMemoryRepository(store, ma)
 	if err != nil {
-		logError("user", u, err)
+		logError("repo", repo, err)
+	}
+
+	storage, err := storage.NewInMemoryStorage(store, ma)
+	if err != nil {
+		logError("storage", store, err)
 	}
 
 	err = repo.Save(u)
@@ -99,7 +108,13 @@ func main() {
 		logError("id", u.GetID(), err)
 	}
 
+	snap, err := storage.Get(u.GetID())
+	if err != nil {
+		logError("id", u.GetID(), err)
+	}
+
 	logger.Log.Info(loaded.String())
+	logger.Log.Warn(snap)
 }
 
 func logError(key string, val interface{}, err error) {

@@ -1,4 +1,4 @@
-package repository
+package storage
 
 import (
 	"errors"
@@ -12,7 +12,6 @@ var (
 )
 
 type UserRepository interface {
-	Find(id valuetypes.UserID) (*user.User, error)
-	Save(user *user.User) error
-	IsExist(id valuetypes.UserID) (bool, error)
+	Get(id valuetypes.UserID) (*user.Snapshot, error)
+	GetList(start, limit *int) ([]*user.Snapshot, error)
 }
