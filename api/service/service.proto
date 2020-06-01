@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package service;
+
+option go_package = "internal/generated/service";
+
+import "google/protobuf/empty.proto";
+
+service ArtistsService {
+  rpc GetUser (GetUserRequest) returns (GetUserReply) {}
+}
+
+message GetUserRequest {
+  string user_id = 1;
+}
+
+message GetUserReply {
+  google.protobuf.Empty empty = 1;
+}

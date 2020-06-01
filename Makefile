@@ -14,4 +14,8 @@ test:
 	go clean -testcache
 	go test -v -cover -tags=entities ./...
 
+.PHONY:proto
+proto:
+	protoc --go_out=plugins=grpc,paths=import:. api/service/*.proto
+
 .DEFAULT_GOAL := run
