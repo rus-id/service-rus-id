@@ -28,7 +28,7 @@ func main() {
 
 	registrationDate := time.Now()
 	state := valuetypes.UserStateBlocked
-	const isRemoved = true
+	const isRemoved = false
 	version := int64(777)
 
 	rating, err := valuetypes.NewRating(5, 2)
