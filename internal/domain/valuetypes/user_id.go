@@ -13,13 +13,8 @@ func CreateUserID() *UserID {
 	return &userID
 }
 
-func NewUserID(value string) (*UserID, error) {
-	id, err := uuid.Parse(value)
-	if err != nil {
-		return nil, err
-	}
-
-	userID := UserID(id)
+func NewUserID(value uuid.UUID) (*UserID, error) {
+	userID := UserID(value)
 	return &userID, nil
 }
 

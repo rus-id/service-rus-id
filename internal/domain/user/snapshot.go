@@ -16,7 +16,7 @@ var (
 )
 
 type Snapshot struct {
-	UserID           string
+	UserID           uuid.UUID `sql:",type:uuid"`
 	FirstName        string
 	MiddleName       *string
 	LastName         string
@@ -40,7 +40,7 @@ type Snapshot struct {
 }
 
 func NewSnapshot(
-	userID string,
+	userID uuid.UUID,
 	firstName string,
 	middleName *string,
 	lastName string,
@@ -118,7 +118,7 @@ func GetSnapshot(user *User, timestamp time.Time) (*Snapshot, error) {
 	}
 
 	snapshot := NewSnapshot(
-		user.id.String(),
+		uuid.UUID(user.id),
 		user.name.GetFirst(),
 		user.name.GetMiddle(),
 		user.name.GetLast(),

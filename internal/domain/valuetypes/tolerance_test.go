@@ -3,6 +3,8 @@ package valuetypes_test
 import (
 	"testing"
 
+	"github.com/google/uuid"
+
 	. "github.com/bgoldovsky/service-rus-id/internal/domain/valuetypes"
 )
 
@@ -185,7 +187,8 @@ func TestTolerance_Idempotent(t *testing.T) {
 }
 
 func TestTolerance_AnyAccessors(t *testing.T) {
-	userID, _ := NewUserID("059b4e12-6983-4806-bd5a-cc3433e78f66")
+	rawUserID, _ := uuid.Parse("059b4e12-6983-4806-bd5a-cc3433e78f66")
+	userID, _ := NewUserID(rawUserID)
 	accessors := []Accessor{AccessorContacts}
 
 	data := []struct {
@@ -205,7 +208,8 @@ func TestTolerance_AnyAccessors(t *testing.T) {
 }
 
 func TestTolerance_String(t *testing.T) {
-	userID, _ := NewUserID("059b4e12-6983-4806-bd5a-cc3433e78f66")
+	rawUserID, _ := uuid.Parse("059b4e12-6983-4806-bd5a-cc3433e78f66")
+	userID, _ := NewUserID(rawUserID)
 	accessors := []Accessor{
 		AccessorContacts,
 		AccessorProfile,

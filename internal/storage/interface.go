@@ -13,5 +13,5 @@ var (
 
 type UserRepository interface {
 	Get(id valuetypes.UserID) (*user.Snapshot, error)
-	GetList(start, limit *int) ([]*user.Snapshot, error)
+	GetList(offset, limit *int) ([]*user.Snapshot, error)
 }

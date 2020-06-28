@@ -3,6 +3,8 @@ package mock
 import (
 	"time"
 
+	"github.com/google/uuid"
+
 	"github.com/bgoldovsky/service-rus-id/internal/domain/entities/driving_license"
 	dlValues "github.com/bgoldovsky/service-rus-id/internal/domain/entities/driving_license/valuetypes"
 	"github.com/bgoldovsky/service-rus-id/internal/domain/entities/passport"
@@ -121,8 +123,6 @@ var (
 // User
 
 const (
-	UserIDRaw          = "059b4e12-6983-4806-bd5a-cc3433e78f66"
-	UserOtherIDRaw     = "060b4e12-6983-4806-bd5a-cc3433e78f66"
 	UserFirstName      = "Boris"
 	UserLastName       = "Goldovsky"
 	UserCountryCode    = 7
@@ -135,6 +135,8 @@ const (
 )
 
 var (
+	UserIDRaw, _                      = uuid.Parse("059b4e12-6983-4806-bd5a-cc3433e78f66")
+	UserOtherIDRaw, err               = uuid.Parse("060b4e12-6983-4806-bd5a-cc3433e78f66")
 	UserCardExpires                   = time.Date(2020, time.Month(4), 9, 1, 10, 30, 0, time.UTC)
 	UserRegistrationDate              = time.Date(2019, time.Month(3), 9, 1, 10, 30, 0, time.UTC)
 	UserSnapshotDate                  = time.Date(2020, time.Month(2), 4, 1, 10, 30, 0, time.UTC)

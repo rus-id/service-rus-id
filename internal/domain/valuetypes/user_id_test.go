@@ -5,31 +5,22 @@ import (
 	"reflect"
 	"testing"
 
+	"github.com/google/uuid"
+
 	. "github.com/bgoldovsky/service-rus-id/internal/domain/valuetypes"
 )
 
 func TestNewUserID_Success(t *testing.T) {
-	expected := &[]byte{5, 155, 78, 18, 105, 131, 72, 6, 189, 90, 204, 52, 51, 231, 143, 102}
+	rawUserID, _ := uuid.Parse("059b4e12-6983-4806-bd5a-cc3433e78f66")
 
-	act, err := NewUserID("059b4e12-6983-4806-bd5a-cc3433e78f66")
+	act, err := NewUserID(rawUserID)
 
 	if err != nil {
 		t.Errorf("error occured: %v", err)
 	}
 
-	if reflect.DeepEqual(act, expected) {
-		t.Errorf("expected: %v, act: %v", expected, act)
-	}
-}
-
-func TestNewUserID_Fail(t *testing.T) {
-	act, err := NewUserID("QWERTY")
-	if err == nil {
-		t.Error("error expected, act nil")
-	}
-
-	if act != nil {
-		t.Errorf("expected: %v, act: %v", nil, act)
+	if reflect.DeepEqual(act, rawUserID) {
+		t.Errorf("expected: %v, act: %v", rawUserID, act)
 	}
 }
 
@@ -44,7 +35,8 @@ func TestCreateNewUserID(t *testing.T) {
 
 func TestUserID_String(t *testing.T) {
 	const expected = "059b4e12-6983-4806-bd5a-cc3433e78f66"
-	act, _ := NewUserID(expected)
+	rawUserID, _ := uuid.Parse(expected)
+	act, _ := NewUserID(rawUserID)
 
 	if act.String() != expected {
 		t.Errorf("expected: %v, act: %v", expected, act)

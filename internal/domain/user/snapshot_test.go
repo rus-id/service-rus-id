@@ -5,8 +5,8 @@ import (
 	"testing"
 
 	"github.com/bgoldovsky/service-rus-id/internal/domain/mock"
-
 	. "github.com/bgoldovsky/service-rus-id/internal/domain/user"
+	"github.com/google/uuid"
 )
 
 func TestNewSnapshot(t *testing.T) {
@@ -145,7 +145,7 @@ func TestLoadFromSnapshot_Success(t *testing.T) {
 	}
 
 	snapshot := NewSnapshot(
-		mock.UserID.String(),
+		mock.UserIDRaw,
 		mock.UserFirstName,
 		mock.UserMiddleName,
 		mock.UserLastName,
@@ -220,7 +220,7 @@ func TestGetSnapshot_Success(t *testing.T) {
 
 	act, _ := GetSnapshot(user, mock.UserSnapshotDate)
 
-	if act.UserID != mock.UserIDRaw {
+	if act.UserID != uuid.UUID(*mock.UserID) {
 		t.Errorf("expected: %v, act: %v", mock.UserIDRaw, act.UserID)
 	}
 
