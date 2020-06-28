@@ -1,6 +1,7 @@
 package in_memory
 
 import (
+	"context"
 	"errors"
 	"sync"
 	"time"
@@ -35,7 +36,7 @@ func NewInMemoryRepository(store map[valuetypes.UserID]*user.Snapshot, ma *sync.
 	}, nil
 }
 
-func (r *InMemoryRepository) Find(id valuetypes.UserID) (*user.User, error) {
+func (r *InMemoryRepository) Find(_ context.Context, id valuetypes.UserID) (*user.User, error) {
 	r.ma.RLock()
 	defer r.ma.RUnlock()
 
@@ -47,7 +48,7 @@ func (r *InMemoryRepository) Find(id valuetypes.UserID) (*user.User, error) {
 	return user.LoadFromSnapshot(val)
 }
 
-func (r *InMemoryRepository) Save(u user.Aggregate) error {
+func (r *InMemoryRepository) Save(_ context.Context, u user.Aggregate) error {
 	if u == nil {
 		return ErrInvalidAggregate
 	}
@@ -69,7 +70,7 @@ func (r *InMemoryRepository) Save(u user.Aggregate) error {
 
 	return nil
 }
-func (r *InMemoryRepository) IsExist(id valuetypes.UserID) (bool, error) {
+func (r *InMemoryRepository) IsExist(_ context.Context, id valuetypes.UserID) (bool, error) {
 	r.ma.RLock()
 	defer r.ma.RUnlock()
 

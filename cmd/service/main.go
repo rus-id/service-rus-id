@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"sync"
 	"time"
 
@@ -91,24 +92,24 @@ func main() {
 		logError("storage", store, err)
 	}
 
-	err = repo.Save(u)
+	err = repo.Save(context.Background(), u)
 	if err != nil {
 		logError("user", u, err)
 	}
 
-	isExist, err := repo.IsExist(u.GetID())
+	isExist, err := repo.IsExist(context.Background(), u.GetID())
 	if err != nil {
 		logError("user", u, err)
 	}
 
 	logger.Log.Infof("User exist %v", isExist)
 
-	loaded, err := repo.Find(u.GetID())
+	loaded, err := repo.Find(context.Background(), u.GetID())
 	if err != nil {
 		logError("id", u.GetID(), err)
 	}
 
-	snap, err := storage.Get(u.GetID())
+	snap, err := storage.Get(context.Background(), u.GetID())
 	if err != nil {
 		logError("id", u.GetID(), err)
 	}

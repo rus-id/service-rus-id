@@ -1,6 +1,7 @@
 package in_memory
 
 import (
+	"context"
 	"errors"
 	"sync"
 
@@ -33,7 +34,7 @@ func NewInMemoryStorage(store map[valuetypes.UserID]*user.Snapshot, ma *sync.RWM
 	}, nil
 }
 
-func (s *InMemoryStorage) Get(id valuetypes.UserID) (*user.Snapshot, error) {
+func (s *InMemoryStorage) Get(_ context.Context, id valuetypes.UserID) (*user.Snapshot, error) {
 	s.ma.RLock()
 	defer s.ma.RUnlock()
 
@@ -45,7 +46,7 @@ func (s *InMemoryStorage) Get(id valuetypes.UserID) (*user.Snapshot, error) {
 	return val, nil
 }
 
-func (s *InMemoryStorage) GetList(_, _ *int) ([]*user.Snapshot, error) {
+func (s *InMemoryStorage) GetList(_ context.Context, _, _ *int) ([]*user.Snapshot, error) {
 	s.ma.RLock()
 	defer s.ma.RUnlock()
 

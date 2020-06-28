@@ -1,6 +1,7 @@
 package storage
 
 import (
+	"context"
 	"errors"
 
 	"github.com/bgoldovsky/service-rus-id/internal/domain/user"
@@ -12,6 +13,6 @@ var (
 )
 
 type UserRepository interface {
-	Get(id valuetypes.UserID) (*user.Snapshot, error)
-	GetList(offset, limit *int) ([]*user.Snapshot, error)
+	Get(ctx context.Context, id valuetypes.UserID) (*user.Snapshot, error)
+	GetList(ctx context.Context, offset, limit *int) ([]*user.Snapshot, error)
 }

@@ -1,6 +1,7 @@
 package repository
 
 import (
+	"context"
 	"errors"
 
 	"github.com/bgoldovsky/service-rus-id/internal/domain/user"
@@ -12,7 +13,7 @@ var (
 )
 
 type UserRepository interface {
-	Find(id valuetypes.UserID) (*user.User, error)
-	Save(user *user.User) error
-	IsExist(id valuetypes.UserID) (bool, error)
+	Find(ctx context.Context, id valuetypes.UserID) (*user.User, error)
+	Save(ctx context.Context, user *user.User) error
+	IsExist(ctx context.Context, id valuetypes.UserID) (bool, error)
 }

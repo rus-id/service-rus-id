@@ -1,6 +1,7 @@
 package in_memory_test
 
 import (
+	"context"
 	"sync"
 	"testing"
 
@@ -60,7 +61,7 @@ func TestInMemoryStorage_Get_Success(t *testing.T) {
 
 	storage, _ := NewInMemoryStorage(store, ma)
 
-	snapshot, err := storage.Get(*mock.UserID)
+	snapshot, err := storage.Get(context.Background(), *mock.UserID)
 
 	if err != nil {
 		t.Errorf("expected: %v, act: %v", nil, err)
@@ -70,7 +71,7 @@ func TestInMemoryStorage_Get_Success(t *testing.T) {
 		t.Errorf("expected: %v, act: %v", nil, err)
 	}
 
-	snapshot, err = storage.Get(*mock.UserOtherID)
+	snapshot, err = storage.Get(context.Background(), *mock.UserOtherID)
 
 	if err != nil {
 		t.Errorf("expected: %v, act: %v", nil, err)
@@ -90,7 +91,7 @@ func TestInMemoryStorage_Get_NotFound(t *testing.T) {
 
 	storage, _ := NewInMemoryStorage(store, ma)
 
-	snapshot, err := storage.Get(*valuetypes.CreateUserID())
+	snapshot, err := storage.Get(context.Background(), *valuetypes.CreateUserID())
 
 	if err != db.ErrNotFound {
 		t.Errorf("expected: %v, act: %v", db.ErrNotFound, err)
@@ -110,7 +111,7 @@ func TestInMemoryStore_GetList_Success(t *testing.T) {
 
 	storage, _ := NewInMemoryStorage(store, ma)
 
-	snapshots, err := storage.GetList(nil, nil)
+	snapshots, err := storage.GetList(context.Background(), nil, nil)
 
 	if err != nil {
 		t.Errorf("expected: %v, act: %v", nil, err)
@@ -127,7 +128,7 @@ func TestInMemoryStore_GetList_NotFound(t *testing.T) {
 
 	storage, _ := NewInMemoryStorage(store, ma)
 
-	snapshots, err := storage.GetList(nil, nil)
+	snapshots, err := storage.GetList(context.Background(), nil, nil)
 
 	if err != db.ErrNotFound {
 		t.Errorf("expected: %v, act: %v", db.ErrNotFound, err)

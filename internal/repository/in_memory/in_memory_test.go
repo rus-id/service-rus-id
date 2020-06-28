@@ -1,6 +1,7 @@
 package in_memory_test
 
 import (
+	"context"
 	"reflect"
 	"sync"
 	"testing"
@@ -58,7 +59,7 @@ func TestInMemoryRepository_Save_Success(t *testing.T) {
 
 	userAggregate := mock.UserAggregate
 
-	err := repo.Save(&userAggregate)
+	err := repo.Save(context.Background(), &userAggregate)
 	if err != nil {
 		t.Errorf("expected: %v, act: %v", nil, err)
 	}
@@ -70,7 +71,7 @@ func TestInMemoryRepository_Save_Nil(t *testing.T) {
 
 	repo, _ := NewInMemoryRepository(store, ma)
 
-	err := repo.Save(nil)
+	err := repo.Save(context.Background(), nil)
 	if err != ErrInvalidAggregate {
 		t.Errorf("expected: %v, act: %v", ErrInvalidAggregate, err)
 	}
@@ -84,7 +85,7 @@ func TestInMemoryRepository_Save_NilAggregate(t *testing.T) {
 
 	userAggregate := mock.UserNilAggregate
 
-	err := repo.Save(&userAggregate)
+	err := repo.Save(context.Background(), &userAggregate)
 	if err != nil {
 		t.Errorf("expected: %v, act: %v", nil, err)
 	}
@@ -98,12 +99,12 @@ func TestInMemoryRepository_IsExist_Success(t *testing.T) {
 
 	userAggregate := mock.UserAggregate
 
-	err := repo.Save(&userAggregate)
+	err := repo.Save(context.Background(), &userAggregate)
 	if err != nil {
 		t.Errorf("expected: %v, act: %v", nil, err)
 	}
 
-	ok, err := repo.IsExist(userAggregate.GetID())
+	ok, err := repo.IsExist(context.Background(), userAggregate.GetID())
 	if !ok {
 		t.Errorf("expected: %v, act: %v", true, ok)
 	}
@@ -122,12 +123,12 @@ func TestInMemoryRepository_IsExist_Removed(t *testing.T) {
 	userAggregate := mock.UserAggregate
 	userAggregate.Remove()
 
-	err := repo.Save(&userAggregate)
+	err := repo.Save(context.Background(), &userAggregate)
 	if err != nil {
 		t.Errorf("expected: %v, act: %v", nil, err)
 	}
 
-	ok, err := repo.IsExist(userAggregate.GetID())
+	ok, err := repo.IsExist(context.Background(), userAggregate.GetID())
 	if ok {
 		t.Errorf("expected: %v, act: %v", false, ok)
 	}
@@ -144,7 +145,7 @@ func TestInMemoryRepository_IsExist_NotExist(t *testing.T) {
 	repo, _ := NewInMemoryRepository(store, ma)
 
 	userAggregate := mock.UserAggregate
-	ok, err := repo.IsExist(userAggregate.GetID())
+	ok, err := repo.IsExist(context.Background(), userAggregate.GetID())
 	if ok {
 		t.Errorf("expected: %v, act: %v", false, ok)
 	}
@@ -162,12 +163,12 @@ func TestInMemoryRepository_Find_Success(t *testing.T) {
 
 	userAggregate := mock.UserAggregate
 
-	err := repo.Save(&userAggregate)
+	err := repo.Save(context.Background(), &userAggregate)
 	if err != nil {
 		t.Errorf("expected: %v, act: %v", nil, err)
 	}
 
-	restored, err := repo.Find(userAggregate.GetID())
+	restored, err := repo.Find(context.Background(), userAggregate.GetID())
 	if err != nil {
 		t.Errorf("expected: %v, act: %v", nil, err)
 	}
@@ -186,12 +187,12 @@ func TestInMemoryRepository_Find_Removed(t *testing.T) {
 	userAggregate := mock.UserAggregate
 	userAggregate.Remove()
 
-	err := repo.Save(&userAggregate)
+	err := repo.Save(context.Background(), &userAggregate)
 	if err != nil {
 		t.Errorf("expected: %v, act: %v", nil, err)
 	}
 
-	restored, err := repo.Find(userAggregate.GetID())
+	restored, err := repo.Find(context.Background(), userAggregate.GetID())
 	if err != repository.ErrNotFound {
 		t.Errorf("expected: %v, act: %v", repository.ErrNotFound, err)
 	}
@@ -208,7 +209,7 @@ func TestInMemoryRepository_Find_NotExist(t *testing.T) {
 	repo, _ := NewInMemoryRepository(store, ma)
 
 	userAggregate := mock.UserAggregate
-	restored, err := repo.Find(userAggregate.GetID())
+	restored, err := repo.Find(context.Background(), userAggregate.GetID())
 	if err != repository.ErrNotFound {
 		t.Errorf("expected: %v, act: %v", repository.ErrNotFound, err)
 	}
